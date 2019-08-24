@@ -1,10 +1,10 @@
 program: main.o
 
-main.o: Point.o Vector.o main.cpp
-	g++ Point.o Vector.o main.cpp -o main.o
+main.o: primitivos/Point.o primitivos/Vector.o main.cpp
+	g++ primitivos/Point.o primitivos/Vector.o main.cpp -o main.o
 
-objects: Point.cpp Vector.cpp
-	g++ -c Point.cpp Vector.cpp
+objects: primitivos/Point.cpp primitivos/Vector.cpp
+	g++ -c primitivos/Point.cpp primitivos/Vector.cpp
 
 clear:
-	rm *.o
+	find . -name '*.0' -delete

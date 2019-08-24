@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Point.hpp"
-#include "Vector.hpp"
+#include "primitivos/Point.hpp"
+#include "primitivos/Vector.hpp"
 
 using namespace std;
 
