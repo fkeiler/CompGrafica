@@ -17,12 +17,6 @@ Vector::Vector(Point p1, Point p2)
   z = p2.z - p1.z;
 }
 
-// Método que retorna a norma do vetor
-double Vector::norm()
-{
-  return sqrt(x*x + y*y + z*z);
-}
-
 // Sobrecarga dos operadores + - * / para operações com escalares
 // Soma com escalar
 Vector Vector::operator+(double a)
@@ -35,19 +29,20 @@ Vector Vector::operator+(double a)
 
   return Vector(xn, yn, zn);
 }
-// Soma com vetor
-Vector Vector::operator+(Vector W)
+// Subtração com escalar
+Vector Vector::operator-(double a)
 {
   double xn, yn, zn;
 
-  xn = x + W.x;
-  yn = y + W.y;
-  zn = z + W.z;
+  xn = x - a;
+  yn = y - a;
+  zn = z - a;
 
   return Vector(xn, yn, zn);
 }
-// Multiplicação por escalar
-Vector Vector::operator*(double a){
+// Multiplicação com escalar
+Vector Vector::operator*(double a)
+{
   double xn, yn, zn;
 
   xn = x * a;
@@ -56,8 +51,9 @@ Vector Vector::operator*(double a){
 
   return Vector(xn, yn, zn);
 }
-// Divisão por escalar
-Vector Vector::operator/(double a){
+// Divisão com escalar
+Vector Vector::operator/(double a)
+{
   double xn, yn, zn;
 
   xn = x / a;
@@ -65,4 +61,68 @@ Vector Vector::operator/(double a){
   zn = z / a;
 
   return Vector(xn, yn, zn);
+}
+
+// Soma escalar
+Vector Vector::operator+(Vector v)
+{
+  double xn, yn, zn;
+
+  xn = x + v.x;
+  yn = y + v.y;
+  zn = z + v.z;
+
+  return Vector(xn, yn, zn);
+}
+// Subtração escalar
+Vector Vector::operator-(Vector v)
+{
+  double xn, yn, zn;
+
+  xn = x - v.x;
+  yn = y - v.y;
+  zn = z - v.z;
+
+  return Vector(xn, yn, zn);
+}
+// Multiplicação escalar
+Vector Vector::operator*(Vector v)
+{
+  double xn, yn, zn;
+
+  xn = x * v.x;
+  yn = y * v.y;
+  zn = z * v.z;
+
+  return Vector(xn, yn, zn);
+}
+// Divisão escalar
+Vector Vector::operator/(Vector v)
+{
+  double xn, yn, zn;
+
+  xn = x / v.x;
+  yn = y / v.y;
+  zn = z / v.z;
+
+  return Vector(xn, yn, zn);
+}
+
+// Método que retorna a norma do vetor
+double Vector::norm()
+{
+  return sqrt(x*x + y*y + z*z);
+}
+
+// Método que retorna o vetor normalizado
+Vector Vector::normalize()
+{
+  // Calcula valor da norma
+  double norm = sqrt(x*x + y*y + z*z);
+  double xn = x/norm;
+  double yn = y/norm;
+  double zn = z/norm;
+  Vector n(xn, yn, zn);
+  
+  return n;
 }

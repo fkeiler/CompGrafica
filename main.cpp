@@ -5,8 +5,9 @@
 using namespace std;
 
 int main() {
-  Vector vetor(3, -4, -3);
-  Vector result = vetor + 3;
+  Vector V(3, -4, -3);
+  Vector W(0, 1, 0);
+  Vector result = V.normalize();
   
   cout << result.x << endl << result.y << endl << result.z << endl;
 
