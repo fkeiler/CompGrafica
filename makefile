@@ -7,4 +7,4 @@ objects: primitivos/Point.cpp primitivos/Vector.cpp
 	g++ -c primitivos/Point.cpp primitivos/Vector.cpp
 
 clear:
-	find . -name '*.0' -delete
+	find . -name '*.o' -delete
