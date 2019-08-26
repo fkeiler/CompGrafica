@@ -1,6 +1,14 @@
 #include "Vector.hpp"
 #include <cmath>
 
+// Construtor Padrão
+Vector::Vector()
+{
+  x = 1;
+  y = 1;
+  z = 1;
+}
+
 // Construtor
 Vector::Vector(double xi, double yi, double zi)
 {
@@ -108,6 +116,7 @@ Vector Vector::operator/(Vector v)
   return Vector(xn, yn, zn);
 }
 
+// Métodos
 // Método que retorna a norma do vetor
 double Vector::norm()
 {
