@@ -1,4 +1,7 @@
 #include "Point.hpp"
+#include <iostream>
+
+using namespace std;
 
 // Construtor padrão
 Point::Point()
@@ -60,4 +63,11 @@ Point Point::operator/(Point v)
   zn = z / v.z;
 
   return Point(xn, yn, zn);
+}
+
+void Point::toString()
+{
+  cout << "Point (x:" << x;
+  cout << ", y:" << y;
+  cout << ", z:" << z << ")" << endl;
 }

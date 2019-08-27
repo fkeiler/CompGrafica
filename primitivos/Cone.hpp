@@ -1,7 +1,9 @@
-#include "Point.hpp"
-#include "Vector.hpp"
 #ifndef CONE_HPP
 #define CONE_HPP
+
+#include "Point.hpp"
+#include "Vector.hpp"
+#include "Ray.hpp"
 
 class Cone
 {
@@ -14,6 +16,7 @@ public:
   Vector n; // Vetor unitário que define a direção e sentido do raio
   // Construtores
   Cone(double, double, Point, Vector); // Prototipo do Construtor
+  Point *colisionPoints(Ray); // Retorna os pontos de colisão do raio com o sólido
 };
 
 #endif

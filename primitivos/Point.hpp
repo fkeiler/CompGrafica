@@ -13,6 +13,8 @@ public:
   Point operator-(Point); // Subtração escalar com point
   Point operator*(Point); // Multiplicação escalar com point
   Point operator/(Point); // Divisão escalar com point
+  // Métodos
+  void toString(); // Exibe coordenadas do ponto
 };
 
 #endif

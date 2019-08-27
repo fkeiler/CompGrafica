@@ -8,3 +8,4 @@ Cylinder::Cylinder(double Hi, double Ri, Point Bi, Vector ui)
   B = Bi;
   u = ui;
 }
+

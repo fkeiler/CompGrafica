@@ -71,7 +71,7 @@ Vector Vector::operator/(double a)
   return Vector(xn, yn, zn);
 }
 
-// Soma escalar
+// Soma escalar com vetor
 Vector Vector::operator+(Vector v)
 {
   double xn, yn, zn;
@@ -82,7 +82,7 @@ Vector Vector::operator+(Vector v)
 
   return Vector(xn, yn, zn);
 }
-// Subtração escalar
+// Subtração escalar com vetor
 Vector Vector::operator-(Vector v)
 {
   double xn, yn, zn;
@@ -93,7 +93,7 @@ Vector Vector::operator-(Vector v)
 
   return Vector(xn, yn, zn);
 }
-// Multiplicação escalar
+// Multiplicação escalar com vetor
 Vector Vector::operator*(Vector v)
 {
   double xn, yn, zn;
@@ -104,7 +104,7 @@ Vector Vector::operator*(Vector v)
 
   return Vector(xn, yn, zn);
 }
-// Divisão escalar
+// Divisão escalar com vetor
 Vector Vector::operator/(Vector v)
 {
   double xn, yn, zn;
@@ -134,4 +134,9 @@ Vector Vector::normalize()
   Vector n(xn, yn, zn);
   
   return n;
+}
+
+double Vector::dotProduct(Vector w)
+{
+  return x*w.x + y*w.y + z*w.z;
 }

@@ -1,37 +1,41 @@
 #include <iostream>
-#include "primitivos/Point.hpp"
-#include "primitivos/Vector.hpp"
+#include "primitivos/Ray.hpp"
+#include "primitivos/Cylinder.hpp"
+#include "primitivos/Cone.hpp"
 
 using namespace std;
 
 int main() {
-  Point atirador;
-  Point pontoMatriz;
+  // Point atirador;
+  // Point pontoMatriz;
   // Matriz
 
   // Com base na matriz e no ponto do atirador
-  Vector d(atirador, pontoMatriz);
-
+  Point p0(3, 3, 3);
+  Vector d(-1, 0.6, -1);
+  Ray raio(p0, d);
   // Cria o Raio: Ray(atirador, d)
   
   // Declara os valores e cria o Cone
-  double alturaCone = 4;
-  double raioCone = 3;
-  Point centroCone(0, 0, 4);
-  Vector direcaoCone(0, 0, 1);
-  // Cone cone1(alturaCone, raioCone, centroCone, direcaoCone);
+  double alturaCone = 20;
+  double raioCone = 20;
+  Point centroCone(0, 0, 0);
+  Vector direcaoCone(0, 1, 0);
+  Cone cone(alturaCone, raioCone, centroCone, direcaoCone);
   
+  Point *p = cone.colisionPoints(raio);
+
   // Declara os valores e cria o Cilindro
-  double alturaCilindro = 3;
-  double raioCilindro = 3;
-  Point centroCilindro(0, 0, 4);
-  Vector direcaoCilindro(0, 0, 1);
+  // double alturaCilindro = 3;
+  // double raioCilindro = 3;
+  // Point centroCilindro(0, 0, 4);
+  // Vector direcaoCilindro(0, 0, 1);
   // Cylinder cilindro1(alturaCone, raioCilindro, centroCilindro, direcaoCilindro);
 
   // Declara os valores e cria os Cubos
-  double arestaCubo;
-  Point centroBaseCubo;
-  Vector uCubo;
+  // double arestaCubo;
+  // Point centroBaseCubo;
+  // Vector uCubo;
   // Cube cubo1(arestaCubo, centroBaseCubo, uCubo);
   
   

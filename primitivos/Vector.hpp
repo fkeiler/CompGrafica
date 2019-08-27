@@ -22,6 +22,7 @@ public:
   // Métodos
   double norm(); // Norma do vetor
   Vector normalize(); // Vetor normalizado
+  double dotProduct(Vector); // Dot Product
 };
 
 #endif
