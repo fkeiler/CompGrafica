@@ -25,6 +25,8 @@ int main() {
   
   Point *p = cone.colisionPoints(raio);
 
+  cout << p0 << endl;
+
   // Declara os valores e cria o Cilindro
   // double alturaCilindro = 3;
   // double raioCilindro = 3;

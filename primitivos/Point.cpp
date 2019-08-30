@@ -64,10 +64,11 @@ Point Point::operator/(Point v)
 
   return Point(xn, yn, zn);
 }
-
-void Point::toString()
+// Output stream 
+std::ostream& operator<<(std::ostream& out, const Point& p)
 {
-  cout << "Point (x:" << x;
-  cout << ", y:" << y;
-  cout << ", z:" << z << ")" << endl;
+  out << "(" << p.x << ", ";
+  out << p.y << ", ";
+  out << p.z << ")";
+  return out;
 }

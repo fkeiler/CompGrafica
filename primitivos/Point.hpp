@@ -1,3 +1,4 @@
+#include <iostream>
 #ifndef POINT_HPP
 #define POINT_HPP
 
@@ -13,8 +14,7 @@ public:
   Point operator-(Point); // Subtração escalar com point
   Point operator*(Point); // Multiplicação escalar com point
   Point operator/(Point); // Divisão escalar com point
-  // Métodos
-  void toString(); // Exibe coordenadas do ponto
+  friend std::ostream& operator<<(std::ostream& out, const Point& p);
 };
 
 #endif
