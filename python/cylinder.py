@@ -8,6 +8,7 @@ class Cylinder:
     self.u = uCylinder
     self.H = cylinderHeight
     self.R = cylinderRadius
+    self.color = (101, 67, 33)
 
   def verifyColision(self, ray):
     v = (ray.p0 - self.B) - self.u*((ray.p0 - self.B).dotProduct(self.u))
@@ -29,7 +30,10 @@ class Cylinder:
 
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
-        tInt.append(t)
+        tInt.append({
+          "color":self.color,
+          "t": t
+        })
 
       return tInt
     else:
@@ -41,7 +45,10 @@ class Cylinder:
       
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
-        tInt.append(t)
+        tInt.append({
+          "color":self.color,
+          "t": t
+        })
 
       # Segundo t
       t = ((-b+sqrt(delta))/(2*a))
@@ -50,6 +57,9 @@ class Cylinder:
 
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
-        tInt.append(t)
+        tInt.append({
+          "color":self.color,
+          "t": t
+        })
       
       return tInt
