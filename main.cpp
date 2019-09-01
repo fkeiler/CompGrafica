@@ -2,6 +2,7 @@
 #include "primitivos/Ray.hpp"
 #include "primitivos/Cylinder.hpp"
 #include "primitivos/Cone.hpp"
+#include "primitivos/Polygon.hpp"
 
 using namespace std;
 
@@ -25,7 +26,10 @@ int main() {
   
   Point *p = cone.colisionPoints(raio);
 
-  cout << p0 << endl;
+  Polygon trianguloExemplar(Point(2.12, 2.81, 0), Point(3.21, 3.91, 1), Point(-1.19, 7.65, 0));
+  Ray exemplo(Point(0, 0, 4), Vector(1.9, 4.05, -3.66));
+
+  cout << trianguloExemplar.colisionPoints(exemplo);
 
   // Declara os valores e cria o Cilindro
   // double alturaCilindro = 3;

@@ -140,3 +140,7 @@ double Vector::dotProduct(Vector w)
 {
   return x*w.x + y*w.y + z*w.z;
 }
+Vector Vector::crossProduct(Vector w)
+{
+  return Vector((y*w.z - z*w.y), (z*w.x - x*w.z), (x*w.y - y*w.x));
+}

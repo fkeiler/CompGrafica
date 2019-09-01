@@ -23,6 +23,7 @@ public:
   double norm(); // Norma do vetor
   Vector normalize(); // Vetor normalizado
   double dotProduct(Vector); // Dot Product
+  Vector crossProduct(Vector); // Cross Product
 };
 
 #endif
