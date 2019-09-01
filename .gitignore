@@ -39,3 +39,5 @@
 
 # Porque quase sempre essa pasta fica gigante
 .vscode
+
+__pycache__
