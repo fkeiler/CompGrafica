@@ -51,5 +51,6 @@ class Point:
   def dotProduct(self, pointVector):
     return self.x*pointVector.x + self.y*pointVector.y + self.z*pointVector.z
 
+  # Cross Product
   def crossProduct(self, pointVector):
-    return Point((y*w.z - z*w.y), (z*w.x - x*w.z), (x*w.y - y*w.x))
+    return Point((self.y*pointVector.z - self.z*pointVector.y), (self.z*pointVector.x - self.x*pointVector.z), (self.x*pointVector.y - self.y*pointVector.x))
