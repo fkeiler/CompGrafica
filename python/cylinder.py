@@ -3,11 +3,12 @@ from point import Point
 
 class Cylinder:
   # Construtor padrão
-  def __init__(self, baseCenter, uCylinder, cylinderHeight, cylinderRadius):
+  def __init__(self, baseCenter, uCylinder, cylinderHeight, cylinderRadius, cylinderLabel):
     self.B = baseCenter
     self.u = uCylinder
     self.H = cylinderHeight
     self.R = cylinderRadius
+    self.label = cylinderLabel
     self.color = (101, 67, 33)
 
   def verifyColision(self, ray):
@@ -31,7 +32,9 @@ class Cylinder:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
         tInt.append({
-          "color":self.color,
+          "color": self.color,
+          "label": self.label,
+          "point": P,
           "t": t
         })
 
@@ -46,7 +49,9 @@ class Cylinder:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
         tInt.append({
-          "color":self.color,
+          "color": self.color,
+          "label": self.label,
+          "point": P,
           "t": t
         })
 
@@ -58,7 +63,9 @@ class Cylinder:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
         tInt.append({
-          "color":self.color,
+          "color": self.color,
+          "label": self.label,
+          "point": P,
           "t": t
         })
       

@@ -4,7 +4,7 @@ from triangle import Triangle
 
 class Cube:
   # Construtor padrão
-  def __init__(self, cubeCenter, cubeEdge):
+  def __init__(self, cubeCenter, cubeEdge, cubeLabel):
     self.C = cubeCenter
     self.e = cubeEdge
     # Vertices do Cubo
@@ -30,6 +30,7 @@ class Cube:
     self.triangles.append(Triangle(self.v4, self.v2, self.v3))
     self.triangles.append(Triangle(self.v8, self.v5, self.v6))
     self.triangles.append(Triangle(self.v8, self.v6, self.v7))
+    self.label = cubeLabel
     self.color = (0, 139, 204)
   
   def verifyColision(self, ray):
@@ -39,8 +40,11 @@ class Cube:
       colision = triangle.verifyColision(ray)
       
       if colision is not None:
+        P = ray.pointT(colision)
         colisions.append({
           "color": self.color,
+          "label": self.label,
+          "point": P,
           "t": colision
         })
 

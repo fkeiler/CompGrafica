@@ -3,13 +3,14 @@ from point import Point
 
 class Cone:
   # Construtor padrão
-  def __init__(self, baseCenter, uCone, coneHeight, coneRadius):
+  def __init__(self, baseCenter, uCone, coneHeight, coneRadius, coneLabel):
     self.C = baseCenter
     self.u = uCone
     self.H = coneHeight
     self.R = coneRadius
     self.V = self.C + self.u*self.H
     self.cosTheta = self.H/sqrt(self.H**2 + self.R**2)
+    self.label = coneLabel
     self.color = (57, 220, 20)
 
   def verifyColision(self, ray):
@@ -24,7 +25,9 @@ class Cone:
       tInt = []
       t = -c/b
       tInt.append({
-        "color":self.color,
+        "color": self.color,
+        "label": self.label,
+        "point": P,
         "t": t
       })
       return tInt
@@ -42,7 +45,9 @@ class Cone:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
         tInt.append({
-          "color":self.color,
+          "color": self.color,
+          "label": self.label,
+          "point": P,
           "t": t
         })
 
@@ -57,7 +62,9 @@ class Cone:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
         tInt.append({
-          "color":self.color,
+          "color": self.color,
+          "label": self.label,
+          "point": P,
           "t": t
         })
 
@@ -69,7 +76,9 @@ class Cone:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if verify >= 0 and verify <= self.H:
         tInt.append({
-          "color":self.color,
+          "color": self.color,
+          "label": self.label,
+          "point": P,
           "t": t
         })
       

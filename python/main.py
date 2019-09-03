@@ -27,16 +27,18 @@ raioCone = 3
 
 arestaCubo = 6
 centroCubo1 = Point(0, -2, -20)
-centroCubo2 = Point(0, 4, -20)
+centroCubo2 = Point(0,  4, -20)
 centroCubo3 = Point(0, 10, -20)
 
 raio = Ray(p0, d)
 chapa = Plate(centroChapa, tamanhoChapa, numeroDeFuros)
-cilindro = Cylinder(centroBaseCilindro, uCilindro, alturaCilindro, raioCilindro)
-cone = Cone(centroBaseCone, uCone, alturaCone, raioCone)
-cubo1 = Cube(centroCubo1, arestaCubo)
-cubo2 = Cube(centroCubo2, arestaCubo)
-cubo3 = Cube(centroCubo3, arestaCubo)
+cilindro = Cylinder(centroBaseCilindro, uCilindro, alturaCilindro, raioCilindro, "cilindro")
+cone = Cone(centroBaseCone, uCone, alturaCone, raioCone, "cone")
+cubo1 = Cube(centroCubo1, arestaCubo, "cubo1")
+cubo2 = Cube(centroCubo2, arestaCubo, "cubo2")
+cubo3 = Cube(centroCubo3, arestaCubo, "cubo3")
+
+arquivo = open("output.txt", "w")
 
 # Calcular colisões
 for x in range(chapa.n):
@@ -44,6 +46,7 @@ for x in range(chapa.n):
     colisoes = []
     corPrimeiraColisao = (255, 255, 255)
     menor = 0
+    linhaSaida = "[" + str(x) + "," + str(y) + "] "
 
     # Calculando o novo d para o ponto da chapa
     raio.d = Point.usingTwoPoints(p0, chapa.point(x, y))
@@ -60,11 +63,21 @@ for x in range(chapa.n):
       menor = colisoes[0]["t"]
 
     for colisao in colisoes:
+      linhaSaida += colisao["label"] + ": P" + str(tuple(colisao["point"].toList())) + " t=" + str(colisao["t"]) + ". "
+
       if(colisao["t"] < menor):
         menor = colisao["t"]
         corPrimeiraColisao = colisao["color"]
 
+    if len(colisoes) == 0:
+      linhaSaida += "None"
+
+    linhaSaida += '\n'
+    arquivo.write(linhaSaida)
+
     chapa.matrix[x][y] = corPrimeiraColisao
+
+arquivo.close()
 
 # Pintar imagem
 imagem = Image.new('RGB', (numeroDeFuros, numeroDeFuros))
