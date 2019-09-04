@@ -43,16 +43,42 @@ centro_base_cone1 = Coordinate( 5, 2, 10, 0)
 centro_base_cone2 = Coordinate(10, 2, 10, 0)
 
 # Inicializando objetos
+cubo1 = Cube(centro_base_cubo1, aresta_cubo)
+cubo2 = Cube(centro_base_cubo2, aresta_cubo)
+cubo3 = Cube(centro_base_cubo3, aresta_cubo)
 cilindro1 = Cylinder(centro_base_cilindro1, vetor_unitario_cilindro, altura_cilindo, raio_cilindro)
 cilindro2 = Cylinder(centro_base_cilindro2, vetor_unitario_cilindro, altura_cilindo, raio_cilindro)
 cone1 = Cone(centro_base_cone1, vetor_unitario_cone, altura_cone, raio_cone)
 cone2 = Cone(centro_base_cone2, vetor_unitario_cone, altura_cone, raio_cone)
-cubo1 = Cube(centro_base_cubo1, aresta_cubo)
-cubo2 = Cube(centro_base_cubo2, aresta_cubo)
-cubo3 = Cube(centro_base_cubo3, aresta_cubo)
 
 # Inicializar camera
 camera = Camera(p0, look_at, view_up)
 
 # Conversão de coordenadas de mundo para coordenadas de camera
-print(camera.Matrix)
+p0 = camera.convert_to_camera_coord(p0)
+look_at = camera.convert_to_camera_coord(look_at)
+view_up = camera.convert_to_camera_coord(view_up)
+
+cubo1.base_center = camera.convert_to_camera_coord(cubo1.base_center)
+for i in range(len(cubo1.vertices)):
+  cubo1.vertices[i] = camera.convert_to_camera_coord(cubo1.vertices[i])
+
+cubo2.base_center = camera.convert_to_camera_coord(cubo2.base_center)
+for i in range(len(cubo2.vertices)):
+  cubo2.vertices[i] = camera.convert_to_camera_coord(cubo2.vertices[i])
+
+cubo3.base_center = camera.convert_to_camera_coord(cubo3.base_center)
+for i in range(len(cubo3.vertices)):
+  cubo3.vertices[i] = camera.convert_to_camera_coord(cubo3.vertices[i])
+
+cilindro1.base_center = camera.convert_to_camera_coord(cilindro1.base_center)
+cilindro1.unitary_vector = camera.convert_to_camera_coord(cilindro1.unitary_vector)
+cilindro2.base_center = camera.convert_to_camera_coord(cilindro2.base_center)
+cilindro2.unitary_vector = camera.convert_to_camera_coord(cilindro2.unitary_vector)
+
+cone1.base_center = camera.convert_to_camera_coord(cone1.base_center)
+cone1.unitary_vector = camera.convert_to_camera_coord(cone1.unitary_vector)
+cone1.vertice = camera.convert_to_camera_coord(cone1.vertice)
+cone2.base_center = camera.convert_to_camera_coord(cone2.base_center)
+cone2.unitary_vector = camera.convert_to_camera_coord(cone2.unitary_vector)
+cone2.vertice = camera.convert_to_camera_coord(cone2.vertice)

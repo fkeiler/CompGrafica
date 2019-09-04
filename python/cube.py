@@ -24,18 +24,18 @@ class Cube:
 
     # Triangulos da face
     triangles = []
-    triangles.append(Triangle(self.v1, self.v5, self.v6))
-    triangles.append(Triangle(self.v1, self.v6, self.v2))
-    triangles.append(Triangle(self.v2, self.v6, self.v7))
-    triangles.append(Triangle(self.v2, self.v7, self.v3))
-    triangles.append(Triangle(self.v3, self.v7, self.v8))
-    triangles.append(Triangle(self.v3, self.v8, self.v4))
-    triangles.append(Triangle(self.v4, self.v8, self.v5))
-    triangles.append(Triangle(self.v4, self.v5, self.v1))
-    triangles.append(Triangle(self.v4, self.v1, self.v2))
-    triangles.append(Triangle(self.v4, self.v2, self.v3))
-    triangles.append(Triangle(self.v8, self.v5, self.v6))
-    triangles.append(Triangle(self.v8, self.v6, self.v7))
+    triangles.append(Triangle(self.vertices[0], self.vertices[4], self.vertices[5]))
+    triangles.append(Triangle(self.vertices[0], self.vertices[5], self.vertices[1]))
+    triangles.append(Triangle(self.vertices[1], self.vertices[5], self.vertices[6]))
+    triangles.append(Triangle(self.vertices[1], self.vertices[6], self.vertices[2]))
+    triangles.append(Triangle(self.vertices[2], self.vertices[6], self.vertices[7]))
+    triangles.append(Triangle(self.vertices[2], self.vertices[7], self.vertices[3]))
+    triangles.append(Triangle(self.vertices[3], self.vertices[7], self.vertices[4]))
+    triangles.append(Triangle(self.vertices[3], self.vertices[4], self.vertices[0]))
+    triangles.append(Triangle(self.vertices[3], self.vertices[0], self.vertices[1]))
+    triangles.append(Triangle(self.vertices[3], self.vertices[1], self.vertices[2]))
+    triangles.append(Triangle(self.vertices[7], self.vertices[4], self.vertices[5]))
+    triangles.append(Triangle(self.vertices[7], self.vertices[5], self.vertices[6]))
 
     for triangle in triangles:
       colision = triangle.verify_colision(ray)
