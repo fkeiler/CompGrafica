@@ -1,15 +1,36 @@
-from __future__ import print_function
-from point import Point
-from ray import Ray
-from plate import Plate
+# Calcular colisões
+for x in range(chapa.n):
+  for y in range(chapa.n):
+    colisoes = []
+    corPrimeiraColisao = (255, 255, 255)
+    menor = 0
 
-p0 = Point(0, 0, 0)
-d = Point(1, 1, 1)
+    # Calculando o novo d para o ponto da chapa
+    raio.d = Point.usingTwoPoints(p0, chapa.point(x, y))
+    
+    colisoes += cilindro.verifyColision(raio)
+    colisoes += cone.verifyColision(raio)
+    colisoes += cubo1.verifyColision(raio) 
+    colisoes += cubo2.verifyColision(raio) 
+    colisoes += cubo3.verifyColision(raio) 
 
-centroChapa = Point(0, 0, -4)
-tamanhoChapa = 4
-numeroDeFuros = 100
+    # Verificar qual é a primeira colisão
+    if len(colisoes) > 0: 
+      corPrimeiraColisao = colisoes[0]["color"]
+      menor = colisoes[0]["t"]
 
-chapa = Plate(centroChapa, tamanhoChapa, numeroDeFuros)
-print(chapa.point(0, 99).toList())
-print(chapa.point(50, 50).toList())
+    for colisao in colisoes:
+      if(colisao["t"] < menor):
+        menor = colisao["t"]
+        corPrimeiraColisao = colisao["color"]
+
+    chapa.matrix[x][y] = corPrimeiraColisao
+
+# Pintar imagem
+imagem = Image.new('RGB', (numeroDeFuros, numeroDeFuros))
+
+for x in range(chapa.n):
+  for y in range(chapa.n):
+    imagem.putpixel( (y,x), chapa.matrix[x][y] )
+
+imagem.save('saida.png')

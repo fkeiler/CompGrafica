@@ -1,11 +1,9 @@
-from point import Point
-
 class Ray:
   # Construtor padrão
-  def __init__(self, p0Entrada, dEntrada):
-    self.p0 = p0Entrada
-    self.d = dEntrada
+  def __init__(self, p0, d):
+    self.p0 = p0
+    self.d = d
 
   # Retorna o ponto P(t) com t sendo um escalar
-  def pointT(self, t):
+  def point(self, t):
     return self.p0 + self.d*t

@@ -10,7 +10,7 @@ class Coordinate:
 
   # Construtor utilizando 2 pontos
   @classmethod
-  def usingTwoPoints(cls, p1, p2):
+  def given_two_points(cls, p1, p2):
     x = p2.x - p1.x
     y = p2.y - p1.y
     z = p2.z - p1.z
@@ -38,7 +38,7 @@ class Coordinate:
       return Coordinate(self.x * other, self.y * other, self.z * other, self.t)
 
   # Retorna os valores de x, y, z, t em uma lista
-  def toList(self):
+  def to_list(self):
     return [self.x, self.y, self.z, self.t]
   
   # Retorna a norma do vetor
@@ -46,13 +46,13 @@ class Coordinate:
     return sqrt(self.x**2 + self.y**2 + self.z**2)
 
   # Retorna o vetor normalizado
-  def normalize(self, cls):
-    return cls(self.x/self.norm(), self.y/self.norm(), self.z/self.norm())
+  def normalize(self):
+    return Coordinate(self.x/self.norm(), self.y/self.norm(), self.z/self.norm(), 1)
 
   # Produto escalar
-  def dotProduct(self, coordinate):
+  def dot_product(self, coordinate):
     return self.x*coordinate.x + self.y*coordinate.y + self.z*coordinate.z
 
   # Cross Product
-  def crossProduct(self, coordinate):
+  def cross_product(self, coordinate):
     return Coordinate((self.y*coordinate.z - self.z*coordinate.y), (self.z*coordinate.x - self.x*coordinate.z), (self.x*coordinate.y - self.y*coordinate.x), self.t)

@@ -1,85 +1,96 @@
 from math import sqrt
-from point import Point
+from coordinate import Coordinate
 
 class Cone:
   # Construtor padrão
-  def __init__(self, baseCenter, uCone, coneHeight, coneRadius, coneLabel):
-    self.C = baseCenter
-    self.u = uCone
-    self.H = coneHeight
-    self.R = coneRadius
-    self.V = self.C + self.u*self.H
-    self.cosTheta = self.H/sqrt(self.H**2 + self.R**2)
-    self.label = coneLabel
+  def __init__(self, base_center, unitary_vector, height, radius):
+    self.base_center = base_center
+    self.unitary_vector = unitary_vector
+    self.height = height
+    self.radius = radius
+    self.vertice = self.base_center + self.unitary_vector * self.height
+    self.cos_theta = self.height/sqrt(self.height**2 + self.radius**2)
     self.color = (57, 220, 20)
 
-  def verifyColision(self, ray):
-    v = self.V - ray.p0
+  def verify_colision(self, ray):
+    # Variavel criada para simplificar os calculos
+    v = self.vertice - ray.p0
 
+    # a, b e c calculados
     a = ray.d.dotProduct(self.u)**2 - ray.d.dotProduct(ray.d)*(self.cosTheta**2)
     b = 2*(v.dotProduct(ray.d)*(self.cosTheta**2) - v.dotProduct(self.u)*ray.d.dotProduct(self.u))
     c = v.dotProduct(self.u)**2 - v.dotProduct(v)*(self.cosTheta**2)
 
-    # Verificando o caso de que a = 0
+    # Caso o a seja igual a 0 nao precisamos calcular o delta
     if a == 0:
-      tInt = []
+      colision_list = []
       t = -c/b
-      tInt.append({
+      colision_list.append({
         "color": self.color,
-        "label": self.label,
         "point": P,
         "t": t
       })
-      return tInt
+      return colision_list
 
+    # delta calculado
     delta = b**2 - 4*a*c
 
+    # Verificar se houve uma, duas ou se nao houveram colisoes
+    # Se o valor delta for menor que 0 nao ocorre nenhuma colisao
+    # Se o valor delta for igual a 0 pode ter ocorrido uma colisao dependendo da altura
+    # Se o valor delta for maior que 0 podem ter ocorrido duas colisoes dependendo da altura
     if delta < 0:
       return []
     elif delta == 0:
-      tInt = []
+      colision_list = []
       t = (-b/(2*a))
-      P = ray.pointT(t)
-      verify = (self.V - P).dotProduct(self.u)
+      
+      # Ponto de colisao com o cone
+      P = ray.point(t)
+      # Altura da colisao
+      point_height = (self.vertice - P).dot_product(self.unitary_vector)
 
-      # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
-      if verify >= 0 and verify <= self.H:
-        tInt.append({
+      # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cone
+      if point_height >= 0 and point_height <= self.height:
+        colision_list.append({
           "color": self.color,
-          "label": self.label,
           "point": P,
           "t": t
         })
 
-      return tInt
+      return colision_list
     else:
-      tInt = []
-      # Primeiro t
+      colision_list = []
+      # Primeiro t encontrado
       t = ((-b-sqrt(delta))/(2*a))
-      P = ray.pointT(t)
-      verify = (self.V - P).dotProduct(self.u)
       
-      # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
-      if verify >= 0 and verify <= self.H:
-        tInt.append({
+      # Ponto de colisao com o cone
+      P = ray.point(t)
+      # Altura da colisao
+      point_height = (self.vertice - P).dot_product(self.unitary_vector)
+
+      # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cone
+      if point_height >= 0 and point_height <= self.height:
+        colision_list.append({
           "color": self.color,
-          "label": self.label,
           "point": P,
           "t": t
         })
 
-      # Segundo t
+      # Segundo t encontrado
       t = ((-b+sqrt(delta))/(2*a))
-      P = ray.pointT(t)
-      verify = (self.V - P).dotProduct(self.u)
+      
+      # Ponto de colisao com o cone
+      P = ray.point(t)
+      # Altura da colisao
+      point_height = (self.vertice - P).dot_product(self.unitary_vector)
 
-      # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
-      if verify >= 0 and verify <= self.H:
-        tInt.append({
+      # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cone
+      if point_height >= 0 and point_height <= self.height:
+        colision_list.append({
           "color": self.color,
-          "label": self.label,
           "point": P,
           "t": t
         })
       
-      return tInt
+      return colision_list

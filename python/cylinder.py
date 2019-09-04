@@ -1,72 +1,83 @@
 from math import sqrt
-from point import Point
 
 class Cylinder:
   # Construtor padrão
-  def __init__(self, baseCenter, uCylinder, cylinderHeight, cylinderRadius, cylinderLabel):
-    self.B = baseCenter
-    self.u = uCylinder
-    self.H = cylinderHeight
-    self.R = cylinderRadius
-    self.label = cylinderLabel
+  def __init__(self, base_center, unitary_vector, height, radius):
+    self.base_center = base_center
+    self.unitary_vector = unitary_vector
+    self.height = height
+    self.radius = radius
     self.color = (101, 67, 33)
 
-  def verifyColision(self, ray):
-    v = (ray.p0 - self.B) - self.u*((ray.p0 - self.B).dotProduct(self.u))
-    w = ray.d - self.u*ray.d.dotProduct(self.u)
+  def verify_colision(self, ray):
+    # Variaveis criadas para simplificar os calculos
+    v = (ray.p0 - self.base_center) - self.unitary_vector * ((ray.p0 - self.base_center).dot_product(self.unitary_vector))
+    w = ray.d - self.unitary_vector * ray.d.dot_product(self.unitary_vector)
     
-    a = w.dotProduct(w)
-    b = 2*v.dotProduct(w)
-    c = v.dotProduct(v) - self.R**2
+    # a, b e c calculados
+    a = w.dot_product(w)
+    b = 2*v.dot_product(w)
+    c = v.dot_product(v) - self.R**2
 
+    # delta calculado
     delta = b**2 - 4*a*c
 
+    # Verificar se houve uma, duas ou se nao houveram colisoes
+    # Se o valor delta for menor que 0 nao ocorre nenhuma colisao
+    # Se o valor delta for igual a 0 pode ter ocorrido uma colisao dependendo da altura
+    # Se o valor delta for maior que 0 podem ter ocorrido duas colisoes dependendo da altura
     if delta < 0:
       return []
     elif delta == 0:
-      tInt = []
+      colision_list = []
       t = (-b/(2*a))
-      P = ray.pointT(t)
-      verify = (P - self.B).dotProduct(self.u)
+      
+      # Ponto de colisao com o cilindro
+      P = ray.point(t)
+      # Altura da colisao
+      point_height = (P - self.base_center).dot_product(self.unitary_vector)
 
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
-      if verify >= 0 and verify <= self.H:
-        tInt.append({
+      if point_height >= 0 and point_height <= self.height:
+        colision_list.append({
           "color": self.color,
-          "label": self.label,
           "point": P,
           "t": t
         })
 
-      return tInt
+      return colision_list
     else:
-      tInt = []
-      # Primeiro t
+      colision_list = []
+      # Primeiro t encontrado
       t = ((-b-sqrt(delta))/(2*a))
-      P = ray.pointT(t)
-      verify = (P - self.B).dotProduct(self.u)
+      
+      # Ponto de colisao com o cilindro
+      P = ray.point(t)
+      # Altura da colisao
+      point_height = (P - self.base_center).dot_product(self.unitary_vector)
       
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
-      if verify >= 0 and verify <= self.H:
-        tInt.append({
+      if point_height >= 0 and point_height <= self.height:
+        colision_list.append({
           "color": self.color,
-          "label": self.label,
           "point": P,
           "t": t
         })
 
-      # Segundo t
+      # Segundo t encontrado
       t = ((-b+sqrt(delta))/(2*a))
-      P = ray.pointT(t)
-      verify = (P - self.B).dotProduct(self.u)
-
+      
+      # Ponto de colisao com o cilindro
+      P = ray.point(t)
+      # Altura da colisao
+      point_height = (P - self.base_center).dot_product(self.unitary_vector)
+      
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
-      if verify >= 0 and verify <= self.H:
-        tInt.append({
+      if point_height >= 0 and point_height <= self.height:
+        colision_list.append({
           "color": self.color,
-          "label": self.label,
           "point": P,
           "t": t
         })
       
-      return tInt
+      return colision_list

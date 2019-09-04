@@ -1,89 +1,58 @@
 from __future__ import print_function
 from PIL import Image
 
-from point import Point
+from coordinate import Coordinate
 from ray import Ray
-from plate import Plate
-from cylinder import Cylinder
+
 from cone import Cone
 from cube import Cube
+from cylinder import Cylinder
+from camera import Camera
 
-p0 = Point(0, 0, 0)
-d = Point(1, 1, 1)
+# Observador
+p0 = Coordinate(7.5, 2, 15, 0)
 
-centroChapa = Point(0, 0, -4)
-tamanhoChapa = 4
-numeroDeFuros = 100
+# "Chapa"
+altura_chapa = 4
+largura_chapa = 4
+numero_furos_vertical = 100
+numero_furos_horizontal = 100
 
-centroBaseCilindro = Point(0, -2, -10)
-uCilindro = Point(0, 1, 0)
-alturaCilindro = 2
-raioCilindro = 0.5
+# Local que ele observa
+look_at = Coordinate(5, 2, 5, 0)
+view_up = Coordinate(5, 6, 5, 0)
 
-centroBaseCone = Point(0, 0, -10)
-uCone = Point(0, 1, 0)
-alturaCone = 8
-raioCone = 3
+# Informações dos cubos
+aresta_cubo = 3
+centro_base_cubo1 = Coordinate(5, 0, 5, 0)
+centro_base_cubo2 = Coordinate(5, 3, 5, 0)
+centro_base_cubo3 = Coordinate(5, 6, 5, 0)
 
-arestaCubo = 6
-centroCubo1 = Point(0, -2, -20)
-centroCubo2 = Point(0,  4, -20)
-centroCubo3 = Point(0, 10, -20)
+# Informações dos cilindros
+altura_cilindo = 2
+raio_cilindro = 0.5
+vetor_unitario_cilindro = Coordinate(0, 1, 0, 1)
+centro_base_cilindro1 = Coordinate( 5, 0, 10, 0)
+centro_base_cilindro2 = Coordinate(10, 0, 10, 0)
 
-raio = Ray(p0, d)
-chapa = Plate(centroChapa, tamanhoChapa, numeroDeFuros)
-cilindro = Cylinder(centroBaseCilindro, uCilindro, alturaCilindro, raioCilindro, "cilindro")
-cone = Cone(centroBaseCone, uCone, alturaCone, raioCone, "cone")
-cubo1 = Cube(centroCubo1, arestaCubo, "cubo1")
-cubo2 = Cube(centroCubo2, arestaCubo, "cubo2")
-cubo3 = Cube(centroCubo3, arestaCubo, "cubo3")
+# Informações dos cones
+altura_cone = 5
+raio_cone = 1
+vetor_unitario_cone = Coordinate(0, 1, 0, 1)
+centro_base_cone1 = Coordinate( 5, 2, 10, 0)
+centro_base_cone2 = Coordinate(10, 2, 10, 0)
 
-arquivo = open("output.txt", "w")
+# Inicializando objetos
+cilindro1 = Cylinder(centro_base_cilindro1, vetor_unitario_cilindro, altura_cilindo, raio_cilindro)
+cilindro2 = Cylinder(centro_base_cilindro2, vetor_unitario_cilindro, altura_cilindo, raio_cilindro)
+cone1 = Cone(centro_base_cone1, vetor_unitario_cone, altura_cone, raio_cone)
+cone2 = Cone(centro_base_cone2, vetor_unitario_cone, altura_cone, raio_cone)
+cubo1 = Cube(centro_base_cubo1, aresta_cubo)
+cubo2 = Cube(centro_base_cubo2, aresta_cubo)
+cubo3 = Cube(centro_base_cubo3, aresta_cubo)
 
-# Calcular colisões
-for x in range(chapa.n):
-  for y in range(chapa.n):
-    colisoes = []
-    corPrimeiraColisao = (255, 255, 255)
-    menor = 0
-    linhaSaida = "[" + str(x) + "," + str(y) + "] "
+# Inicializar camera
+camera = Camera(p0, look_at, view_up)
 
-    # Calculando o novo d para o ponto da chapa
-    raio.d = Point.usingTwoPoints(p0, chapa.point(x, y))
-    
-    colisoes += cilindro.verifyColision(raio)
-    colisoes += cone.verifyColision(raio)
-    colisoes += cubo1.verifyColision(raio) 
-    colisoes += cubo2.verifyColision(raio) 
-    colisoes += cubo3.verifyColision(raio) 
-
-    # Verificar qual é a primeira colisão
-    if len(colisoes) > 0: 
-      corPrimeiraColisao = colisoes[0]["color"]
-      menor = colisoes[0]["t"]
-
-    for colisao in colisoes:
-      linhaSaida += colisao["label"] + ": P" + str(tuple(colisao["point"].toList())) + " t=" + str(colisao["t"]) + ". "
-
-      if(colisao["t"] < menor):
-        menor = colisao["t"]
-        corPrimeiraColisao = colisao["color"]
-
-    if len(colisoes) == 0:
-      linhaSaida += "None"
-
-    linhaSaida += '\n'
-    arquivo.write(linhaSaida)
-
-    chapa.matrix[x][y] = corPrimeiraColisao
-
-arquivo.close()
-
-# Pintar imagem
-imagem = Image.new('RGB', (numeroDeFuros, numeroDeFuros))
-
-for x in range(chapa.n):
-  for y in range(chapa.n):
-    imagem.putpixel( (y,x), chapa.matrix[x][y] )
-
-imagem.save('saida.png')
+# Conversão de coordenadas de mundo para coordenadas de camera
+print(camera.Matrix)
