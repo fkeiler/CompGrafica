@@ -14,7 +14,7 @@ class Coordinate:
     x = p2.x - p1.x
     y = p2.y - p1.y
     z = p2.z - p1.z
-    t = 1
+    t = p2.t - p1.t
 
     return cls(x, y, z, t)
 

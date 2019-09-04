@@ -41,7 +41,7 @@ class Cube:
       colision = triangle.verify_colision(ray)
       
       if colision is not None:
-        P = ray.pointT(colision)
+        P = ray.point(colision)
         colision_list.append({
           "color": self.color,
           "point": P,

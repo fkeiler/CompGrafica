@@ -17,9 +17,9 @@ class Cone:
     v = self.vertice - ray.p0
 
     # a, b e c calculados
-    a = ray.d.dotProduct(self.u)**2 - ray.d.dotProduct(ray.d)*(self.cosTheta**2)
-    b = 2*(v.dotProduct(ray.d)*(self.cosTheta**2) - v.dotProduct(self.u)*ray.d.dotProduct(self.u))
-    c = v.dotProduct(self.u)**2 - v.dotProduct(v)*(self.cosTheta**2)
+    a = ray.d.dot_product(self.unitary_vector)**2 - ray.d.dot_product(ray.d)*(self.cos_theta**2)
+    b = 2*(v.dot_product(ray.d)*(self.cos_theta**2) - v.dot_product(self.unitary_vector)*ray.d.dot_product(self.unitary_vector))
+    c = v.dot_product(self.unitary_vector)**2 - v.dot_product(v)*(self.cos_theta**2)
 
     # Caso o a seja igual a 0 nao precisamos calcular o delta
     if a == 0:

@@ -17,7 +17,7 @@ class Cylinder:
     # a, b e c calculados
     a = w.dot_product(w)
     b = 2*v.dot_product(w)
-    c = v.dot_product(v) - self.R**2
+    c = v.dot_product(v) - self.radius**2
 
     # delta calculado
     delta = b**2 - 4*a*c
