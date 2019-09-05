@@ -25,6 +25,7 @@ class Cone:
     if a == 0:
       colision_list = []
       t = -c/b
+      P = ray.point(t)
       colision_list.append({
         "color": self.color,
         "point": P,

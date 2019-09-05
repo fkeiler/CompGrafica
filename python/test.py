@@ -1,36 +1,93 @@
-# Calcular colisões
-for x in range(chapa.n):
-  for y in range(chapa.n):
+from __future__ import print_function
+from PIL import Image
+
+from coordinate import Coordinate
+from ray import Ray
+from plate import Plate
+
+from cone import Cone
+from cube import Cube
+from cylinder import Cylinder
+
+
+# Observador
+p0 = Coordinate(0, 0, 0, 1)
+
+# Informações Chapa
+tamanho_chapa = 6
+numero_furos_chapa = 300
+distancia_chapa = 3
+
+# Informações dos cubos
+aresta_cubo = 3
+centro_base_cubo1 = Coordinate(-3.5355339059327378, -2.0, -10.606601717798211, 1)
+centro_base_cubo2 = Coordinate(-3.5355339059327378, 1, -10.606601717798211, 1)
+centro_base_cubo3 = Coordinate(-3.5355339059327378, 4, -10.606601717798211, 1)
+
+# Informações dos cilindros
+altura_cilindo = 2
+raio_cilindro = 0.5
+vetor_unitario_cilindro = Coordinate(0, 1, 0, 0)
+centro_base_cilindro1 = Coordinate(1.4142, -2, -11.3137, 1)
+centro_base_cilindro2 = Coordinate(-2.8284, -2, -15.5563, 1)
+
+# Informações dos cones
+altura_cone = 8
+raio_cone = 2
+vetor_unitario_cone = Coordinate(0, 1, 0, 0)
+centro_base_cone1 = Coordinate(1.4142, 0, -11.3137, 1)
+centro_base_cone2 = Coordinate(-2.8284, 0, -15.5563, 1)
+
+# Inicializando raio e chapa
+raio = Ray(p0)
+chapa = Plate(tamanho_chapa, numero_furos_chapa, distancia_chapa)
+
+# Inicializando objetos
+cubo1 = Cube(centro_base_cubo1, aresta_cubo)
+cubo2 = Cube(centro_base_cubo2, aresta_cubo)
+cubo3 = Cube(centro_base_cubo3, aresta_cubo)
+cilindro1 = Cylinder(centro_base_cilindro1, vetor_unitario_cilindro, altura_cilindo, raio_cilindro)
+cone1 = Cone(centro_base_cone1, vetor_unitario_cone, altura_cone, raio_cone)
+cilindro2 = Cylinder(centro_base_cilindro2, vetor_unitario_cilindro, altura_cilindo, raio_cilindro)
+cone2 = Cone(centro_base_cone2, vetor_unitario_cone, altura_cone, raio_cone)
+
+# Colorindo objetos para facilitar identificacao
+cubo1.color = (46, 119, 187)
+cubo2.color = (29, 131, 195)
+cubo3.color = (39, 174, 227)
+
+imagem = Image.new('RGB', (numero_furos_chapa, numero_furos_chapa))
+
+for l in range(chapa.number_of_holes):
+  for c in range(chapa.number_of_holes):
     colisoes = []
-    corPrimeiraColisao = (255, 255, 255)
-    menor = 0
+    cor_primeira_colisao = (255, 255, 255)
+    menor_t = 0
 
-    # Calculando o novo d para o ponto da chapa
-    raio.d = Point.usingTwoPoints(p0, chapa.point(x, y))
+    # Definindo o valor d do raio com base no ponto da chapa
+    raio.d = Coordinate.given_two_points(p0, chapa.point(l, c))
     
-    colisoes += cilindro.verifyColision(raio)
-    colisoes += cone.verifyColision(raio)
-    colisoes += cubo1.verifyColision(raio) 
-    colisoes += cubo2.verifyColision(raio) 
-    colisoes += cubo3.verifyColision(raio) 
+    # Calculando colisões
+    colisoes += cilindro1.verify_colision(raio)
+    colisoes += cone1.verify_colision(raio)
+    colisoes += cilindro2.verify_colision(raio)
+    colisoes += cone2.verify_colision(raio)
+    colisoes += cubo1.verify_colision(raio)
+    colisoes += cubo2.verify_colision(raio)
+    colisoes += cubo3.verify_colision(raio)
 
-    # Verificar qual é a primeira colisão
-    if len(colisoes) > 0: 
-      corPrimeiraColisao = colisoes[0]["color"]
-      menor = colisoes[0]["t"]
+    # Verificando quem foi atigindo primeiro
+    if len(colisoes) > 0:
+      cor_primeira_colisao = colisoes[0]["color"]
+      menor_t = colisoes[0]["t"]
 
     for colisao in colisoes:
-      if(colisao["t"] < menor):
-        menor = colisao["t"]
-        corPrimeiraColisao = colisao["color"]
+      if(colisao["t"] < menor_t):
+        menor_t = colisao["t"]
+        cor_primeira_colisao = colisao["color"]
 
-    chapa.matrix[x][y] = corPrimeiraColisao
+    # Desenhando na imagem
+    chapa.buffer[l][c] = cor_primeira_colisao
+    imagem.putpixel( (c, l), chapa.buffer[l][c] )
 
-# Pintar imagem
-imagem = Image.new('RGB', (numeroDeFuros, numeroDeFuros))
-
-for x in range(chapa.n):
-  for y in range(chapa.n):
-    imagem.putpixel( (y,x), chapa.matrix[x][y] )
-
-imagem.save('saida.png')
+imagem.save('saida_teste.png')

@@ -2,8 +2,7 @@ from coordinate import Coordinate
 
 class Plate:
   # Construtor padrão
-  def __init__(self, center, size, number_of_holes, distance):
-    self.center = center
+  def __init__(self, size, number_of_holes, distance):
     self.size = size
     self.number_of_holes = number_of_holes
     self.distance = distance

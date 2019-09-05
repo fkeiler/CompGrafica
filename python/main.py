@@ -11,12 +11,12 @@ from cylinder import Cylinder
 from camera import Camera
 
 # Observador
-p0 = Coordinate(10, 2, 20, 1)
+p0 = Coordinate(0, 2, 0, 1)
 
 # Informações Chapa
-tamanho_chapa = 8
+tamanho_chapa = 6
 numero_furos_chapa = 200
-distancia_chapa = 6
+distancia_chapa = 3
 
 # Local que ele observa
 look_at = Coordinate(10, 2, 10, 1)
@@ -32,19 +32,19 @@ centro_base_cubo3 = Coordinate(10, 6, 5, 1)
 altura_cilindo = 2
 raio_cilindro = 0.5
 vetor_unitario_cilindro = Coordinate(0, 1, 0, 0)
-centro_base_cilindro1 = Coordinate( 20, 0, 15, 1)
-centro_base_cilindro2 = Coordinate(20, 0, 15, 1)
+centro_base_cilindro1 = Coordinate(7, 0, 9, 1)
+centro_base_cilindro2 = Coordinate(13, 0, 9, 1)
 
 # Informações dos cones
 altura_cone = 8
 raio_cone = 2
 vetor_unitario_cone = Coordinate(0, 1, 0, 0)
-centro_base_cone1 = Coordinate(20, 2, 15, 1)
-centro_base_cone2 = Coordinate(20, 2, 15, 1)
+centro_base_cone1 = Coordinate(7, 2, 9, 1)
+centro_base_cone2 = Coordinate(13, 2, 9, 1)
 
 # Inicializando raio e chapa
-raio = Ray(p0, Coordinate(0, 0, 0, 0))
-chapa = Plate(Coordinate(0, 0, 0,0), tamanho_chapa, numero_furos_chapa, distancia_chapa)
+raio = Ray(p0)
+chapa = Plate(tamanho_chapa, numero_furos_chapa, distancia_chapa)
 
 # Inicializar camera
 camera = Camera(p0, look_at, view_up)
@@ -65,6 +65,7 @@ cubo3.color = (39, 174, 227)
 
 # Conversão de coordenadas de mundo para coordenadas de camera
 p0 = camera.convert_to_camera_coord(p0)
+raio.p0 = p0
 
 cubo1.base_center = camera.convert_to_camera_coord(cubo1.base_center)
 for i in range(len(cubo1.vertices)):
@@ -92,6 +93,13 @@ cone2.vertice = camera.convert_to_camera_coord(cone2.vertice)
 
 imagem = Image.new('RGB', (numero_furos_chapa, numero_furos_chapa))
 
+print("p0:", p0.to_list())
+print("C cone 1:", cone1.base_center.to_list())
+print("C cone 2:", cone2.base_center.to_list())
+print("C cilindro 1:", cilindro1.base_center.to_list())
+print("C cilindro 2:", cilindro2.base_center.to_list())
+print("C cubo 1:", cubo1.base_center.to_list())
+
 for l in range(chapa.number_of_holes):
   for c in range(chapa.number_of_holes):
     colisoes = []
@@ -100,14 +108,17 @@ for l in range(chapa.number_of_holes):
 
     # Definindo o valor d do raio com base no ponto da chapa
     raio.d = Coordinate.given_two_points(p0, chapa.point(l, c))
+    
+    # Calculando colisões
     colisoes += cilindro1.verify_colision(raio)
-    colisoes += cilindro2.verify_colision(raio)
     colisoes += cone1.verify_colision(raio)
+    colisoes += cilindro2.verify_colision(raio)
     colisoes += cone2.verify_colision(raio)
     colisoes += cubo1.verify_colision(raio)
     colisoes += cubo2.verify_colision(raio)
     colisoes += cubo3.verify_colision(raio)
 
+    # Verificando quem foi atigindo primeiro
     if len(colisoes) > 0:
       cor_primeira_colisao = colisoes[0]["color"]
       menor_t = colisoes[0]["t"]
@@ -116,7 +127,10 @@ for l in range(chapa.number_of_holes):
       if(colisao["t"] < menor_t):
         menor_t = colisao["t"]
         cor_primeira_colisao = colisao["color"]
+    
+    del colisoes
 
+    # Desenhando na imagem
     chapa.buffer[l][c] = cor_primeira_colisao
     imagem.putpixel( (c, l), chapa.buffer[l][c] )
 
