@@ -81,3 +81,12 @@ class Cylinder:
         })
       
       return colision_list
+
+
+  def normal_vector(self, P):
+    #Ver desenho da Fernanda
+    P1 = self.base_center + ((P - self.base_center).dot_product(self.unitary_vector))*(self.unitary_vector)
+
+    n = (P - P1)/self.radius
+
+    return n

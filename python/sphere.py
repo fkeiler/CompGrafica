@@ -30,7 +30,7 @@ class Sphere:
                 "point": P,
                 "t": t
             })
-
+            return colision_list
         #Delta maior que 0, raio atravessa a esfera, com 2 pontos de colisão
         else:
             colision_list = []
@@ -50,7 +50,8 @@ class Sphere:
                 "point": P,
                 "t": t
             })
-
+            return colision_list
+            
     #Calcula o vetor normal à superfície da esfera
     def normal_vector(self, P):
         n = (P - self.center)/self.radius
