@@ -60,8 +60,8 @@ cubo1.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0
 cubo2.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0.73], 0.5)
 cubo3.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0.73], 0.5)
 
-luzAmbiente = Ambiente(0.5, 0.5, 0.5)
-luzRemota = Remota(1, 1, 1, Coordinate(1, -1, 1, 0))
+luzAmbiente = Ambiente(0.1, 0.1, 0.1)
+luzRemota = Remota(0.9, 0.85, 0.5, Coordinate(-1, -1, -1, 0))
 
 imagem = Image.new('RGB', (numero_furos_chapa, numero_furos_chapa))
 

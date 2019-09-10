@@ -100,20 +100,16 @@ class Cone:
         })
       
       return colision_list
-
+ 
   def normal_vector(self, P):
-
-    #Checar desenho da Fernanda 
-    P1 = self.base_center + (self.unitary_vector)*((P-self.base_center).dot_product(self.unitary_vector)) #P1 é ponto da altura do cilindro
-    P2 = P - P1 #P2 é o vetor (P1,P)
     
     V = self.base_center + (self.unitary_vector*self.height) #Calculo da posição do vertice V
 
-    P3 = V - P #Vetor (P,V)
+    vg = V - P #Vetor (P,V)
 
-    T = P3.cross_product(P2)
+    vt = (self.unitary_vector).cross_product(vg)
 
-    N = T.cross_product(P3)
+    N = vt.cross_product(vg)
 
     n = N * (1/(N.norm()))
 
