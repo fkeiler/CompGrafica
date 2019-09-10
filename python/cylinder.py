@@ -43,7 +43,8 @@ class Cylinder:
         colision_list.append({
           "material": self.material,
           "point": P,
-          "t": t
+          "t": t,
+          "polygon": self
         })
 
       return colision_list
@@ -62,7 +63,8 @@ class Cylinder:
         colision_list.append({
           "material": self.material,
           "point": P,
-          "t": t
+          "t": t,
+          "polygon": self
         })
 
       # Segundo t encontrado
@@ -78,7 +80,8 @@ class Cylinder:
         colision_list.append({
           "material": self.material,
           "point": P,
-          "t": t
+          "t": t,
+          "polygon": self
         })
       
       return colision_list
@@ -86,8 +89,8 @@ class Cylinder:
 
   def normal_vector(self, P):
     #Ver desenho da Fernanda
-    P1 = self.base_center + ((P - self.base_center).dot_product(self.unitary_vector))*(self.unitary_vector)
+    P1 = self.base_center + (self.unitary_vector)*((P - self.base_center).dot_product(self.unitary_vector))
 
-    n = (P - P1)/self.radius
+    n = (P-P1) * (1/self.radius)
 
     return n

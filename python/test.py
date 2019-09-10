@@ -61,7 +61,7 @@ cubo2.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0
 cubo3.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0.73], 0.5)
 
 luzAmbiente = Ambiente(0.5, 0.5, 0.5)
-luzRemota = Remota(1, 1, 1, Coordinate(1, 1, 1, 0))
+luzRemota = Remota(1, 1, 1, Coordinate(1, -1, 1, 0))
 
 imagem = Image.new('RGB', (numero_furos_chapa, numero_furos_chapa))
 
@@ -85,13 +85,13 @@ for l in range(chapa.number_of_holes):
 
     # Verificando quem foi atigindo primeiro
     if len(colisoes) > 0:
-      cor_primeira_colisao = [sum(x) for x in zip(luzAmbiente.aplicar(colisoes[0]["material"]),luzRemota.aplicar(colisoes[0]["material"], raio.point(colisoes[0]["t"]), cone1))]
+      cor_primeira_colisao = [sum(x) for x in zip(luzAmbiente.aplicar(colisoes[0]["material"]),luzRemota.aplicar(colisoes[0]["material"], raio.point(colisoes[0]["t"]), colisoes[0]["polygon"]))]
       menor_t = colisoes[0]["t"]
 
     for colisao in colisoes:
       if(colisao["t"] < menor_t):
         menor_t = colisao["t"]
-        cor_primeira_colisao = [sum(x) for x in zip(luzAmbiente.aplicar(colisao["material"]), luzRemota.aplicar(colisao["material"], raio.point(colisao["t"]), cone1))]
+        cor_primeira_colisao = [sum(x) for x in zip(luzAmbiente.aplicar(colisao["material"]), luzRemota.aplicar(colisao["material"], raio.point(colisao["t"]), colisao["polygon"]))]
 
     # Desenhando na imagem
     chapa.buffer[l][c] = cor_primeira_colisao

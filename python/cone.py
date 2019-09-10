@@ -30,7 +30,8 @@ class Cone:
       colision_list.append({
         "material": self.material,
         "point": P,
-        "t": t
+        "t": t,
+        "polygon": self
       })
       return colision_list
 
@@ -57,7 +58,8 @@ class Cone:
         colision_list.append({
           "material": self.material,
           "point": P,
-          "t": t
+          "t": t,
+          "polygon": self
         })
 
       return colision_list
@@ -76,7 +78,8 @@ class Cone:
         colision_list.append({
           "material": self.material,
           "point": P,
-          "t": t
+          "t": t,
+          "polygon": self
         })
 
       # Segundo t encontrado
@@ -92,7 +95,8 @@ class Cone:
         colision_list.append({
           "material": self.material,
           "point": P,
-          "t": t
+          "t": t,
+          "polygon": self
         })
       
       return colision_list

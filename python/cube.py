@@ -45,7 +45,12 @@ class Cube:
         colision_list.append({
           "material": self.material,
           "point": P,
-          "t": colision
+          "t": colision,
+          "polygon": self
         })
 
     return colision_list
+
+  def normal_vector(self, P):
+    return P
+
