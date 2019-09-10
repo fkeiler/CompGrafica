@@ -46,7 +46,7 @@ class Cube:
           "material": self.material,
           "point": P,
           "t": colision,
-          "polygon": self
+          "polygon": triangle
         })
 
     return colision_list

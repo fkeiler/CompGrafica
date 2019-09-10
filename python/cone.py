@@ -109,7 +109,7 @@ class Cone:
 
     vt = (self.unitary_vector).cross_product(vg)
 
-    N = vt.cross_product(vg)
+    N = vg.cross_product(vt)
 
     n = N * (1/(N.norm()))
 

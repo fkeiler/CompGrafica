@@ -21,3 +21,12 @@ class Triangle:
     
     return t_int
  
+  def normal_vector(self, P):
+    v1 = self.p2 - self.p1
+    v2 = self.p3 - self.p1
+
+    N = v1.cross_product(v2)
+
+    n_vector = N * (1/N.norm())
+
+    return n_vector
