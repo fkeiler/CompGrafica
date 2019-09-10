@@ -9,6 +9,10 @@ from cone import Cone
 from cube import Cube
 from cylinder import Cylinder
 
+from material import Material
+from ambiente import Ambiente
+from remota import Remota
+
 
 # Observador
 p0 = Coordinate(0, 0, 0, 1)
@@ -51,10 +55,13 @@ cone1 = Cone(centro_base_cone1, vetor_unitario_cone, altura_cone, raio_cone)
 cilindro2 = Cylinder(centro_base_cilindro2, vetor_unitario_cilindro, altura_cilindo, raio_cilindro)
 cone2 = Cone(centro_base_cone2, vetor_unitario_cone, altura_cone, raio_cone)
 
-# Colorindo objetos para facilitar identificacao
-cubo1.color = (46, 119, 187)
-cubo2.color = (29, 131, 195)
-cubo3.color = (39, 174, 227)
+# materialindo objetos para facilitar identificacao
+cubo1.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0.73], 0.5)
+cubo2.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0.73], 0.5)
+cubo3.material = Material([0.18, 0.46, 0.73], [0.18, 0.46, 0.73], [0.18, 0.46, 0.73], 0.5)
+
+luzAmbiente = Ambiente(0.5, 0.5, 0.5)
+luzRemota = Remota(1, 1, 1, Coordinate(1, 1, 1, 0))
 
 imagem = Image.new('RGB', (numero_furos_chapa, numero_furos_chapa))
 
@@ -78,16 +85,16 @@ for l in range(chapa.number_of_holes):
 
     # Verificando quem foi atigindo primeiro
     if len(colisoes) > 0:
-      cor_primeira_colisao = colisoes[0]["color"]
+      cor_primeira_colisao = [sum(x) for x in zip(luzAmbiente.aplicar(colisoes[0]["material"]),luzRemota.aplicar(colisoes[0]["material"], raio.point(colisoes[0]["t"]), cone1))]
       menor_t = colisoes[0]["t"]
 
     for colisao in colisoes:
       if(colisao["t"] < menor_t):
         menor_t = colisao["t"]
-        cor_primeira_colisao = colisao["color"]
+        cor_primeira_colisao = [sum(x) for x in zip(luzAmbiente.aplicar(colisao["material"]), luzRemota.aplicar(colisao["material"], raio.point(colisao["t"]), cone1))]
 
     # Desenhando na imagem
     chapa.buffer[l][c] = cor_primeira_colisao
-    imagem.putpixel( (c, l), chapa.buffer[l][c] )
+    imagem.putpixel( (c, l), tuple(int(c*255) for c in chapa.buffer[l][c]) )
 
 imagem.save('saida_teste.png')

@@ -1,5 +1,6 @@
 from math import sqrt
 from coordinate import Coordinate
+from material import Material
 
 class Cone:
   # Construtor padrão
@@ -10,7 +11,7 @@ class Cone:
     self.radius = radius
     self.vertice = self.base_center + self.unitary_vector * self.height
     self.cos_theta = self.height/sqrt(self.height**2 + self.radius**2)
-    self.color = (57, 220, 20)
+    self.material = Material([0.22, 0.86, 0.08], [0.22, 0.86, 0.08], [0.22, 0.86, 0.08], 0.1)
 
   def verify_colision(self, ray):
     # Variavel criada para simplificar os calculos
@@ -27,7 +28,7 @@ class Cone:
       t = -c/b
       P = ray.point(t)
       colision_list.append({
-        "color": self.color,
+        "material": self.material,
         "point": P,
         "t": t
       })
@@ -54,7 +55,7 @@ class Cone:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cone
       if point_height >= 0 and point_height <= self.height:
         colision_list.append({
-          "color": self.color,
+          "material": self.material,
           "point": P,
           "t": t
         })
@@ -73,7 +74,7 @@ class Cone:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cone
       if point_height >= 0 and point_height <= self.height:
         colision_list.append({
-          "color": self.color,
+          "material": self.material,
           "point": P,
           "t": t
         })
@@ -89,27 +90,27 @@ class Cone:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cone
       if point_height >= 0 and point_height <= self.height:
         colision_list.append({
-          "color": self.color,
+          "material": self.material,
           "point": P,
           "t": t
         })
       
       return colision_list
 
-    def normal_vector(self, P):
+  def normal_vector(self, P):
 
-      #Checar desenho da Fernanda 
-      P1 = self.base_center + ((P-self.base_center).dot_product(self.unitary_vector))*(self.unitary_vector) #P1 é ponto da altura do cilindro
-      P2 = P - P1 #P2 é o vetor (P1,P)
-      
-      V = self.base_center + (self.unitary_vector*self.height) #Calculo da posição do vertice V
+    #Checar desenho da Fernanda 
+    P1 = self.base_center + (self.unitary_vector)*((P-self.base_center).dot_product(self.unitary_vector)) #P1 é ponto da altura do cilindro
+    P2 = P - P1 #P2 é o vetor (P1,P)
+    
+    V = self.base_center + (self.unitary_vector*self.height) #Calculo da posição do vertice V
 
-      P3 = V - P #Vetor (P,V)
+    P3 = V - P #Vetor (P,V)
 
-      T = P3.cross_product(P2)
+    T = P3.cross_product(P2)
 
-      N = T.cross_product(P3)
+    N = T.cross_product(P3)
 
-      n = N/(N.norm())
+    n = N * (1/(N.norm()))
 
-      return n 
+    return n 

@@ -17,7 +17,7 @@ class Cube:
     self.vertices.append(Coordinate(base_center.x + cube_edge/2, base_center.y, base_center.z + cube_edge/2, 0))
     self.vertices.append(Coordinate(base_center.x + cube_edge/2, base_center.y, base_center.z - cube_edge/2, 0))
     self.vertices.append(Coordinate(base_center.x - cube_edge/2, base_center.y, base_center.z - cube_edge/2, 0))
-    self.color = (0, 139, 204)
+    self.material = (0, 139, 204)
   
   def verify_colision(self, ray):
     colision_list = []
@@ -43,7 +43,7 @@ class Cube:
       if colision is not None:
         P = ray.point(colision)
         colision_list.append({
-          "color": self.color,
+          "material": self.material,
           "point": P,
           "t": colision
         })

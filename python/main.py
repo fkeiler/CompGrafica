@@ -58,10 +58,10 @@ cilindro2 = Cylinder(centro_base_cilindro2, vetor_unitario_cilindro, altura_cili
 cone1 = Cone(centro_base_cone1, vetor_unitario_cone, altura_cone, raio_cone)
 cone2 = Cone(centro_base_cone2, vetor_unitario_cone, altura_cone, raio_cone)
 
-# Colorindo objetos para facilitar identificacao
-cubo1.color = (46, 119, 187)
-cubo2.color = (29, 131, 195)
-cubo3.color = (39, 174, 227)
+# materialindo objetos para facilitar identificacao
+cubo1.material = (46, 119, 187)
+cubo2.material = (29, 131, 195)
+cubo3.material = (39, 174, 227)
 
 # Conversão de coordenadas de mundo para coordenadas de camera
 p0 = camera.convert_to_camera_coord(p0)
@@ -120,13 +120,13 @@ for l in range(chapa.number_of_holes):
 
     # Verificando quem foi atigindo primeiro
     if len(colisoes) > 0:
-      cor_primeira_colisao = colisoes[0]["color"]
+      cor_primeira_colisao = colisoes[0]["material"]
       menor_t = colisoes[0]["t"]
 
     for colisao in colisoes:
       if(colisao["t"] < menor_t):
         menor_t = colisao["t"]
-        cor_primeira_colisao = colisao["color"]
+        cor_primeira_colisao = colisao["material"]
     
     del colisoes
 

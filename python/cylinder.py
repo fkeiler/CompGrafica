@@ -1,4 +1,5 @@
 from math import sqrt
+from material import Material
 
 class Cylinder:
   # Construtor padrão
@@ -7,7 +8,7 @@ class Cylinder:
     self.unitary_vector = unitary_vector
     self.height = height
     self.radius = radius
-    self.color = (101, 67, 33)
+    self.material = Material([0.4, 0.26, 0.13], [0.4, 0.26, 0.13], [0.4, 0.26, 0.13], 0.1)
 
   def verify_colision(self, ray):
     # Variaveis criadas para simplificar os calculos
@@ -40,7 +41,7 @@ class Cylinder:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if point_height >= 0 and point_height <= self.height:
         colision_list.append({
-          "color": self.color,
+          "material": self.material,
           "point": P,
           "t": t
         })
@@ -59,7 +60,7 @@ class Cylinder:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if point_height >= 0 and point_height <= self.height:
         colision_list.append({
-          "color": self.color,
+          "material": self.material,
           "point": P,
           "t": t
         })
@@ -75,7 +76,7 @@ class Cylinder:
       # Verifica se o valor t encontrado resulta em um ponto dentro da altura do cilindro
       if point_height >= 0 and point_height <= self.height:
         colision_list.append({
-          "color": self.color,
+          "material": self.material,
           "point": P,
           "t": t
         })
