@@ -1,51 +1,47 @@
-from math import sqrt
-from coordinate import Coordinate
-from triangle import Triangle
+import numpy as np
+from plane import Plane
+from sphere import Sphere
 
 class Cube:
   # Construtor padrão
-  def __init__(self, base_center, cube_edge):
-    self.base_center = base_center
-    self.edge = cube_edge
-    # Vertices do Cubo
-    self.vertices = []
-    self.vertices.append(Coordinate(base_center.x - cube_edge/2, base_center.y + cube_edge, base_center.z + cube_edge/2, 0))
-    self.vertices.append(Coordinate(base_center.x + cube_edge/2, base_center.y + cube_edge, base_center.z + cube_edge/2, 0))
-    self.vertices.append(Coordinate(base_center.x + cube_edge/2, base_center.y + cube_edge, base_center.z - cube_edge/2, 0))
-    self.vertices.append(Coordinate(base_center.x - cube_edge/2, base_center.y + cube_edge, base_center.z - cube_edge/2, 0))
-    self.vertices.append(Coordinate(base_center.x - cube_edge/2, base_center.y, base_center.z + cube_edge/2, 0))
-    self.vertices.append(Coordinate(base_center.x + cube_edge/2, base_center.y, base_center.z + cube_edge/2, 0))
-    self.vertices.append(Coordinate(base_center.x + cube_edge/2, base_center.y, base_center.z - cube_edge/2, 0))
-    self.vertices.append(Coordinate(base_center.x - cube_edge/2, base_center.y, base_center.z - cube_edge/2, 0))
-    self.color = (0, 139, 204)
-  
-  def verify_colision(self, ray):
-    colision_list = []
+  def __init__(self, baseCenter, cubeEdge, colision, visibility):
+    # Informações do cubo
+    self.baseCenter = np.copy(baseCenter)
+    self.edge = cubeEdge
+    
+    # Faces do cubo
+    self.faces = []
 
-    # Triangulos da face
-    triangles = []
-    triangles.append(Triangle(self.vertices[0], self.vertices[4], self.vertices[5]))
-    triangles.append(Triangle(self.vertices[0], self.vertices[5], self.vertices[1]))
-    triangles.append(Triangle(self.vertices[1], self.vertices[5], self.vertices[6]))
-    triangles.append(Triangle(self.vertices[1], self.vertices[6], self.vertices[2]))
-    triangles.append(Triangle(self.vertices[2], self.vertices[6], self.vertices[7]))
-    triangles.append(Triangle(self.vertices[2], self.vertices[7], self.vertices[3]))
-    triangles.append(Triangle(self.vertices[3], self.vertices[7], self.vertices[4]))
-    triangles.append(Triangle(self.vertices[3], self.vertices[4], self.vertices[0]))
-    triangles.append(Triangle(self.vertices[3], self.vertices[0], self.vertices[1]))
-    triangles.append(Triangle(self.vertices[3], self.vertices[1], self.vertices[2]))
-    triangles.append(Triangle(self.vertices[7], self.vertices[4], self.vertices[5]))
-    triangles.append(Triangle(self.vertices[7], self.vertices[5], self.vertices[6]))
+    A = np.array([self.baseCenter[0] - self.edge/2, self.baseCenter[1] + self.edge, self.baseCenter[2] + self.edge/2, 1])
+    B = np.array([self.baseCenter[0] + self.edge/2, self.baseCenter[1] + self.edge, self.baseCenter[2] + self.edge/2, 1])
+    C = np.array([self.baseCenter[0] - self.edge/2, self.baseCenter[1], self.baseCenter[2] + self.edge/2, 1])
+    D = np.array([self.baseCenter[0] + self.edge/2, self.baseCenter[1], self.baseCenter[2] + self.edge/2, 1])
+    E = np.array([self.baseCenter[0] - self.edge/2, self.baseCenter[1] + self.edge, self.baseCenter[2] - self.edge/2, 1])
+    F = np.array([self.baseCenter[0] + self.edge/2, self.baseCenter[1] + self.edge, self.baseCenter[2] - self.edge/2, 1])
+    G = np.array([self.baseCenter[0] - self.edge/2, self.baseCenter[1], self.baseCenter[2] - self.edge/2, 1])
+    H = np.array([self.baseCenter[0] + self.edge/2, self.baseCenter[1], self.baseCenter[2] - self.edge/2, 1])
 
-    for triangle in triangles:
-      colision = triangle.verify_colision(ray)
-      
-      if colision is not None:
-        P = ray.point(colision)
-        colision_list.append({
-          "color": self.color,
-          "point": P,
-          "t": colision
-        })
+    self.faces.append(Plane(A, B, C, D, np.array([0.0, 0.0, 1.0, 0.0])))
+    self.faces.append(Plane(B, F, D, H, np.array([1.0, 0.0, 0.0, 0.0])))
+    self.faces.append(Plane(F, E, H, G, np.array([0.0, 0.0, -1.0, 0.0])))
+    self.faces.append(Plane(E, A, C, G, np.array([-1.0, 0.0, 0.0, 0.0])))
+    self.faces.append(Plane(E, F, A, B, np.array([0.0, 1.0, 0.0, 0.0])))
+    self.faces.append(Plane(G, H, C, D, np.array([0.0, -1.0, 0.0, 0.0])))
 
-    return colision_list
+    # Esfera de contato
+    cubeCenter = np.copy(self.baseCenter)
+    cubeCenter[1] += self.edge/2
+    contactSphereRadius = np.linalg.norm(A - cubeCenter)
+    self.contactSphere = Sphere(cubeCenter, contactSphereRadius, True, False)
+    
+    #self.material = material
+    self.colision = colision
+    self.visibility = visibility
+
+  def verifyColision(self, ray):
+    # Verificando se o objeto recebe colisões
+    if not self.colision:
+      return []
+    
+    
+    

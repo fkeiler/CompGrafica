@@ -11,7 +11,7 @@ from cylinder import Cylinder
 from camera import Camera
 
 # Observador
-p0 = np.array([0, 2, 0, 1])
+p0 = np.array([0.0, 2.0, 0.0, 1.0])
 
 # Informações Chapa
 larguraChapa = 8
@@ -21,14 +21,14 @@ numeroFurosAltura = 480
 distancia_chapa = 4
 
 # Local que ele observa
-lookAt = np.array([10, 2, 10, 1])
-viewUp = np.array([10, 8, 10, 1])
+lookAt = np.array([10.0, 2.0, 10.0, 1.0])
+viewUp = np.array([10.0, 8.0, 10.0, 1.0])
 
 # Informações dos cubos
 arestaCubo = 3
-centroBaseCubo1 = np.array([10, 0, 5, 1])
-centroBaseCubo2 = np.array([10, 3, 5, 1])
-centroBaseCubo3 = np.array([10, 6, 5, 1])
+centroBaseCubo1 = np.array([10.0, 0.0, 5.0, 1.0])
+centroBaseCubo2 = np.array([10.0, 3.0, 5.0, 1.0])
+centroBaseCubo3 = np.array([10.0, 6.0, 5.0, 1.0])
 
 # Informações dos cilindros
 altura_cilindo = 2
@@ -45,5 +45,10 @@ centro_base_cone1 = Coordinate(7, 2, 9, 1)
 centro_base_cone2 = Coordinate(13, 2, 9, 1)
 
 # Inicializando raio e chapa
+
+# Inicializando Objetos da Cena
+cubo = Cube(centroBaseCubo1, arestaCubo, True, True)
+
+print(p0)
 
 # Conversão de coordenadas de mundo para coordenadas de camera
