@@ -4,7 +4,7 @@ from sphere import Sphere
 
 class Cube:
   # Construtor padrão
-  def __init__(self, baseCenter, cubeEdge, colision, visibility):
+  def __init__(self, baseCenter, cubeEdge, colision):
     # Informações do cubo
     self.baseCenter = np.copy(baseCenter)
     self.edge = cubeEdge
@@ -36,7 +36,6 @@ class Cube:
     
     #self.material = material
     self.colision = colision
-    self.visibility = visibility
 
   def verifyColision(self, ray):
     # Verificando se o objeto recebe colisões

@@ -14,21 +14,21 @@ from camera import Camera
 p0 = np.array([0.0, 2.0, 0.0, 1.0])
 
 # Informações Chapa
-larguraChapa = 8
-alturaChapa = 6
-numeroFurosLargura = 640
-numeroFurosAltura = 480
+largura_chapa = 8
+altura_chapa = 6
 distancia_chapa = 4
+numero_furos_largura = 640
+numero_furos_altura = 480
 
 # Local que ele observa
-lookAt = np.array([10.0, 2.0, 10.0, 1.0])
-viewUp = np.array([10.0, 8.0, 10.0, 1.0])
+look_at = np.array([10.0, 2.0, 10.0, 1.0])
+view_up = np.array([10.0, 8.0, 10.0, 1.0])
 
 # Informações dos cubos
-arestaCubo = 3
-centroBaseCubo1 = np.array([10.0, 0.0, 5.0, 1.0])
-centroBaseCubo2 = np.array([10.0, 3.0, 5.0, 1.0])
-centroBaseCubo3 = np.array([10.0, 6.0, 5.0, 1.0])
+aresta_cubo = 3
+centro_base_cubo1 = np.array([10.0, 0.0, 5.0, 1.0])
+centro_base_cubo2 = np.array([10.0, 3.0, 5.0, 1.0])
+centro_base_cubo3 = np.array([10.0, 6.0, 5.0, 1.0])
 
 # Informações dos cilindros
 altura_cilindo = 2
@@ -47,8 +47,18 @@ centro_base_cone2 = Coordinate(13, 2, 9, 1)
 # Inicializando raio e chapa
 
 # Inicializando Objetos da Cena
-cubo = Cube(centroBaseCubo1, arestaCubo, True, True)
+cubo = Cube(centro_base_cubo1, aresta_cubo, True)
 
-print(p0)
+# Inicializando Camera
+camera = Camera(p0, look_at, view_up)
 
 # Conversão de coordenadas de mundo para coordenadas de camera
+p0 = camera.convert_to_camera_coord(p0)
+
+for face in cubo.faces:
+  for i in range(len(face.points)):
+    face.points[i] = camera.convert_to_camera_coord(face.points[i])
+  
+  face.n = camera.convert_to_camera_coord(face.n)
+
+
