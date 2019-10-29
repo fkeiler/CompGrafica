@@ -55,10 +55,4 @@ camera = Camera(p0, look_at, view_up)
 # Conversão de coordenadas de mundo para coordenadas de camera
 p0 = camera.convert_to_camera_coord(p0)
 
-for face in cubo.faces:
-  for i in range(len(face.points)):
-    face.points[i] = camera.convert_to_camera_coord(face.points[i])
-  
-  face.n = camera.convert_to_camera_coord(face.n)
-
-
+#print(p0)

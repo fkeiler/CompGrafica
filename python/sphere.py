@@ -2,11 +2,12 @@ import numpy as np
 
 class Sphere:
   # Construtor Padrão
-  def __init__(self, centerSphere, radius, colision, visibility):
-    self.center = np.copy(centerSphere)
+  def __init__(self, sphere_center, radius, colision, visibility):
+    self.center = np.copy(sphere_center)
     self.radius = radius
     self.colision = colision
     self.visibility = visibility
+    self.colision = colision
 
   def verifyColision(self, ray):
     # Caso a colisão esteja desligada

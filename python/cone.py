@@ -1,16 +1,17 @@
 from math import sqrt
-from coordinate import Coordinate
+from numpy import copy
 
 class Cone:
   # Construtor padrão
-  def __init__(self, base_center, unitary_vector, height, radius):
-    self.base_center = base_center
-    self.unitary_vector = unitary_vector
+  def __init__(self, base_center, unitary_vector, height, radius, material):
+    self.base_center = copy(base_center)
+    self.unitary_vector = copy(unitary_vector)
     self.height = height
     self.radius = radius
     self.vertice = self.base_center + self.unitary_vector * self.height
     self.cos_theta = self.height/sqrt(self.height**2 + self.radius**2)
-    self.color = (57, 220, 20)
+    self.material = material
+
 
   def verify_colision(self, ray):
     # Variavel criada para simplificar os calculos
