@@ -110,8 +110,21 @@ int main(int argc, char **argv) {
         std::cout << transformMatrix.row[i] << std::endl;
     }
 */
+    LinearAlgebra::Vector4Df sphereCenter{8, 0, 1, 1};
+    float radius = 1;
 
+    LinearAlgebra::Vector4Df P0{1, 0, 1, 1};
+    LinearAlgebra::Vector4Df d = (sphereCenter - P0).normalize();
 
+    std::cout << -d << std::endl;
+
+    Sphere sphere(sphereCenter, radius, "Test Sphere");
+
+    std::vector<CG::Result> results = sphere.verifyColision(P0, d);
+
+    for(auto & result: results) {
+        std::cout << result.Pint << std::endl;
+    }
 
     return 0;
 }

@@ -11,12 +11,13 @@ class Camera {
     LinearAlgebra::Matrix4Df transformationMatrix;
     LinearAlgebra::Vector4Df P0, lookAt, viewUp, d;
 
-    CG::Result *plateBuffer;
-    float plateDistance, plateSizeVertical, plateSizeHorizontal;
-    int numberOfHolesVertical, numberOfHolesHorizontal;
+    std::vector<CG::Result> buffer;
+
+    float plateDistance, sizeVertical, sizeHorizontal;
+    int nHolesVertical, nHolesHorizontal;
 
     Camera(float, float, float, int, int);
+    LinearAlgebra::Vector4Df convert(LinearAlgebra::Vector4Df coord);
 };
-
 
 #endif //TRABALHO_CAMERA_HPP

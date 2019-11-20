@@ -29,6 +29,8 @@ namespace LinearAlgebra {
         inline Vector3Df operator*(const float a) {return Vector3Df{x*a, y*a, z*a};}
         inline Vector3Df operator/(const float a) {return Vector3Df{x/a, y/a, z/a};}
 
+        inline void operator+=(const Vector3Df v) {x+=v.x; y+=v.y; z+=v.z;}
+
         inline float norm(void) { return sqrtf(powf(x, 2) + powf(y,2)+powf(z,2)); }
         inline float dot_product(const Vector3Df v) {return x*v.x + y*v.y + z*v.z;}
         inline Vector3Df normalize(void) { return Vector3Df{x, y, z}/norm(); }
@@ -54,6 +56,8 @@ namespace LinearAlgebra {
         inline Vector4Df operator-(const float a) {return Vector4Df{x-a, y-a, z-a, w};}
         inline Vector4Df operator*(const float a) {return Vector4Df{x*a, y*a, z*a, w};}
         inline Vector4Df operator/(const float a) {return Vector4Df{x/a, y/a, z/a, w};}
+
+        inline Vector4Df operator-(void) {return Vector4Df{x, y, z, w}*-1;}
 
         inline float norm(void) { return sqrt(pow(x, 2) + pow(y,2)+pow(z,2)); }
         inline float dot_product(const Vector4Df v) {return x*v.x + y*v.y + z*v.z + w*v.w;}

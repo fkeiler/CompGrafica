@@ -4,7 +4,7 @@
 
 #include "Sphere.hpp"
 
-// Esfera comum
+// Esfera de colisão
 Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, std::string li)
 {
     center = ci;
