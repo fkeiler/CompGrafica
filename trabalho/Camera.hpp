@@ -15,7 +15,7 @@ class Camera {
     float plateDistance, plateSizeVertical, plateSizeHorizontal;
     int numberOfHolesVertical, numberOfHolesHorizontal;
 
-    Camera(float, float, float, int, int)
+    Camera(float, float, float, int, int);
 };
 
 
