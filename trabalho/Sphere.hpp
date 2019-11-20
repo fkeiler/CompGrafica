@@ -9,13 +9,18 @@
 
 class Sphere {
 public:
-    LinearAlgebra::Vector4Df center;
-    float radius;
+    LinearAlgebra::Vector4Df center; // Centro do cilindro
+    float radius; // Raio do cilindro
     CG::Material material;
+    std::string label;
+    bool colision;
 
-    Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi);
+    // Construtor de esfera de colisão usada em clusters/cubos
+    Sphere(LinearAlgebra::Vector4Df ci, float ri, std::string li);
+    // Construtor de esfera comum com material
+    Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi, std::string li);
 
-    CG::Result verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
+    std::vector<CG::Result> verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
     LinearAlgebra::Vector4Df normal(LinearAlgebra::Vector4Df Pint);
 };
 

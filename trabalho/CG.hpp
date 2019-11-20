@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <cmath>
 
 namespace LinearAlgebra {
@@ -84,8 +85,6 @@ namespace CG {
     };
 
     struct Result {
-
-        bool colision;
         float t;
         LinearAlgebra::Vector4Df Pint;
         LinearAlgebra::Vector4Df normal;

@@ -1,19 +1,16 @@
-#include <iostream>
-#include <vector>
-
 #include <GL/glew.h>
 #include <GL/glut.h>
 
-#include "Coordinate.hpp"
 #include "Ray.hpp"
-#include "Plane.hpp"
 #include "Sphere.hpp"
+#include "Cylinder.hpp"
 
 #include "CG.hpp"
 
 const int WIDTH = 640, HEIGHT = 480;
 const int BUFFER_SIZE = WIDTH*HEIGHT*3;
 
+/*
 void display(){
     int mod;
 
@@ -70,6 +67,7 @@ void display(){
     glDrawPixels(WIDTH, HEIGHT, GL_RGB, GL_FLOAT, data); // Função que exibe o buffer de pixels na tela
     glutSwapBuffers(); // Troca de buffer
 }
+*/
 
 int main(int argc, char **argv) {
     // Criação da Janela
@@ -86,6 +84,7 @@ int main(int argc, char **argv) {
     glutMainLoop(); // Loop do programa
     */
 
+/*
     LinearAlgebra::Vector4Df P0{7.5, 2, 15, 1};
     LinearAlgebra::Vector4Df LA{5, 2, 5, 1};
     LinearAlgebra::Vector4Df VU{5, 6, 5, 1};
@@ -110,8 +109,9 @@ int main(int argc, char **argv) {
     for(int i = 0; i < 4; i++){
         std::cout << transformMatrix.row[i] << std::endl;
     }
+*/
 
-    std::cout << std::endl << transformMatrix*P0 << std::endl;
+
 
     return 0;
 }

@@ -10,16 +10,20 @@
 class Cylinder
 {
 public:
-    double height; // Altura Cilindro
-    double radius; // Raio Cilindro
-    Coordinate baseCenter; // Centro base cilindro
-    Coordinate unitaryDirection; // Vetor unitário que define a direção do cilindro
+    float height, radius; // Altura Cilindro e Raio Cilindro
+    LinearAlgebra::Vector4Df baseCenter, unitaryDirection; // Centro base cilindro e Vetor unitário que define a direção do cilindro
+    Plane basePlane, topPlane; // Parte de baixo do cilindro e "Tampa" do cilindro
+    CG::Material material;
+    std::string label;
+    bool colision;
 
-    Plane basePlane; // Parte de baixo do cilindro
-    Plane topPlane; // "Tampa" do cilindro
+    // Construtor de cilindro usado em clusters
+    Cylinder(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, std::string li);
+    // Construtor de cilindro comum com material
+    Cylinder(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi, std::string li);
 
-    Cylinder(double, double, Coordinate, Coordinate); // Construtor
-    double *verifyColision(Ray ray);
+    std::vector<CG::Result> verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
+    LinearAlgebra::Vector4Df normal(LinearAlgebra::Vector4Df Pint);
 };
 
 

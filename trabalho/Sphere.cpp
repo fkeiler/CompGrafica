@@ -4,17 +4,35 @@
 
 #include "Sphere.hpp"
 
-Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi)
+// Esfera comum
+Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, std::string li)
+{
+    center = ci;
+    radius = ri;
+    label = li;
+    colision = true;
+}
+
+// Esfera comum
+Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi, std::string li)
 {
     center = ci;
     radius = ri;
     material = mi;
+    label = li;
+    colision = true;
 }
 
-CG::Result Sphere::verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
+std::vector<CG::Result> Sphere::verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
 {
-    float a, b, c, delta, t1, t2;
-    CG::Result result;
+    std::vector<CG::Result> results;
+
+    // Caso a colisão do objeto esteja desligada retornamos uma lista de colisões vazia
+    if (!colision) {
+        return results;
+    }
+
+    float a, b, c, delta;
 
     a = d.dot_product(d); // d.d
     b = 2*(P0 - center).dot_product(d); // 2*((P0-C).d)
@@ -24,40 +42,55 @@ CG::Result Sphere::verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Ve
 
     /*
      *  Calculando o valor de delta podemos chegar ao número inicial de colisões:
-     *    Se delta < 0 não ocorre nenhuma colisão
-     *    Se delta = 0 ocorre apenas uma colisão
-     *    Se delta > 0 ocorrem duas colisões
+     *    -Se delta < 0 não ocorre nenhuma colisão
+     *    -Se delta = 0 ocorre apenas uma colisão
+     *    -Se delta > 0 ocorrem duas colisões
      */
 
     if(delta < 0) {
         // Nenhuma Colisão
-        result.colision = false; return result;
+        return results;
     } else if (delta == 0) {
         // Uma colisão
-        result.colision = true;
-        result.t = -b/(2*a);
-        result.Pint = P0 + d*result.t;
-        result.normal = normal(result.Pint);
-        result.objectMaterial = material;
-        result.label = "Sphere";
+        float tint = -b/(2*a);
+        LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        return result;
+        results.push_back(CG::Result{
+                tint,
+                Pint,
+                normal(Pint),
+                material,
+                label
+        });
+
+        return results;
     } else {
         // Duas colisões
-        result.colision = true;
+        float tint = (-b-sqrtf(delta))/(2*a);
+        LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        if (a > 0) {
-            result.t = (-b-sqrtf(delta))/(2*a);
-        } else {
-            result.t = (-b+sqrtf(delta))/(2*a);
-        }
+        // Colisão 1
+        results.push_back(CG::Result{
+                tint,
+                Pint,
+                normal(Pint),
+                material,
+                label
+        });
 
-        result.Pint = P0 + d*result.t;
-        result.normal = normal(result.Pint);
-        result.objectMaterial = material;
-        result.label = "Sphere";
+        tint = (-b+sqrtf(delta))/(2*a);
+        Pint =  P0 + d*tint;
 
-        return result;
+        // Colisão 2
+        results.push_back(CG::Result{
+                tint,
+                Pint,
+                normal(Pint),
+                material,
+                label
+        });
+
+        return results;
     }
 }
 
