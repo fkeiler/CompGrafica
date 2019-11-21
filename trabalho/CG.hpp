@@ -95,6 +95,10 @@ namespace CG {
         Material objectMaterial;
         std::string label;
     };
+
+    inline Material sBlackMaterial(void) {return Material{LinearAlgebra::Vector3Df{0, 0, 0}, LinearAlgebra::Vector3Df{0, 0, 0},LinearAlgebra::Vector3Df{0, 0, 0}, 0};}
+    inline Material sRedMaterial(void) {return Material{LinearAlgebra::Vector3Df{0.8, 0, 0}, LinearAlgebra::Vector3Df{0, 0, 0},LinearAlgebra::Vector3Df{0, 0, 0}, 0};}
+    inline Material sGrayMaterial(void) {return Material{LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960}, LinearAlgebra::Vector3Df{0, 0, 0},LinearAlgebra::Vector3Df{0, 0, 0}, 0};}
 }
 
 
