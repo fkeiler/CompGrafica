@@ -6,8 +6,12 @@
 #define TRABALHO_CAMERA_HPP
 
 #include "CG.hpp"
+#include "Sphere.hpp"
+#include "Plane.hpp"
 
-class Camera {
+class Camera
+{
+public:
     LinearAlgebra::Matrix4Df transformationMatrix;
     LinearAlgebra::Vector4Df P0, lookAt, viewUp, d;
 
@@ -16,8 +20,9 @@ class Camera {
     float plateDistance, sizeVertical, sizeHorizontal;
     int nHolesVertical, nHolesHorizontal;
 
-    Camera(float, float, float, int, int);
+    Camera( LinearAlgebra::Vector4Df pi, LinearAlgebra::Vector4Df li, LinearAlgebra::Vector4Df vi, int height, int width );
     LinearAlgebra::Vector4Df convert(LinearAlgebra::Vector4Df coord);
+    void renderScenary(Sphere esfera, Plane plano);
 };
 
 #endif //TRABALHO_CAMERA_HPP
