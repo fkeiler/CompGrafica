@@ -67,13 +67,16 @@ std::vector<CG::Result> Cone::verifyColision(LinearAlgebra::Vector4Df P0, Linear
         float tint = -b/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        results.push_back(CG::Result{
-                tint,
-                Pint,
-                normal(Pint),
-                material,
-                label
-        });
+        if((vertex - Pint).dot_product(unitaryDirection) <= height){
+            results.push_back(CG::Result{
+                    tint,
+                    Pint,
+                    normal(Pint),
+                    material,
+                    label
+            });
+        }
+
 
         return results;
     }
@@ -82,26 +85,29 @@ std::vector<CG::Result> Cone::verifyColision(LinearAlgebra::Vector4Df P0, Linear
         float tint = (-b-sqrtf(delta))/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        // Colisão 1
-        results.push_back(CG::Result{
-                tint,
-                Pint,
-                normal(Pint),
-                material,
-                label
-        });
+        if((vertex - Pint).dot_product(unitaryDirection) <= height){
 
-        tint = (-b+sqrtf(delta))/(2*a);
-        Pint =  P0 + d*tint;
+            // Colisão 1
+            results.push_back(CG::Result{
+                    tint,
+                    Pint,
+                    normal(Pint),
+                    material,
+                    label
+            });
 
-        // Colisão 2
-        results.push_back(CG::Result{
-                tint,
-                Pint,
-                normal(Pint),
-                material,
-                label
-        });
+            tint = (-b+sqrtf(delta))/(2*a);
+            Pint =  P0 + d*tint;
+
+            // Colisão 2
+            results.push_back(CG::Result{
+                    tint,
+                    Pint,
+                    normal(Pint),
+                    material,
+                    label
+            });
+        }
 
         return results;
     }
@@ -109,5 +115,17 @@ std::vector<CG::Result> Cone::verifyColision(LinearAlgebra::Vector4Df P0, Linear
 
 LinearAlgebra::Vector4Df Cone::normal(LinearAlgebra::Vector4Df Pint)
 {
-    //falta a normal
+    LinearAlgebra::Vector4Df PintMinusBC = Pint - baseCenter;
+    float aux = PintMinusBC.dot_product(unitaryDirection);
+    LinearAlgebra::Vector4Df Pe = baseCenter + unitaryDirection*aux;
+    // = equação da reta com (basecenter, aux, unitaryDirection): retorna Ponto (V4Df) base.x + aux * unitary.x. y and z
+    //tomei como base o código da fernanda, que está com uma nomenclatura diferente do pdf do creto, mas aparenta ter a mesma forma, só n tenho certeza da declaração do Pe
+    LinearAlgebra::Vector4Df PintMinusPe = Pint - Pe;
+    LinearAlgebra::Vector4Df PiV = vertex - Pint;
+
+    LinearAlgebra::Vector4Df T = PiV.cross_product(PintMinusPe);
+    LinearAlgebra::Vector4Df N = T.cross_product(PiV);
+
+    return N/N.norm();
+
 }
