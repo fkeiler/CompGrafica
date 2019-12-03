@@ -8,7 +8,7 @@
 #include "CG.hpp"
 #include "Plane.hpp"
 
-class Cone
+class Cone : public Colliding
 {
 public:
     float height, radius, cosTheta; // Altura do cone, Raio do Cone e Coseno do angulo que a geratriz forma com o eixo do cone
@@ -21,7 +21,7 @@ public:
     // Construtor de cone comum com material
     Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi, std::string li);
 
-    std::vector<CG::Result> verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
+    std::vector<CG::Result> verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
     LinearAlgebra::Vector4Df normal(LinearAlgebra::Vector4Df Pint);
 
 };

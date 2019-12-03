@@ -23,7 +23,7 @@ Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi, std::stri
     colision = true;
 }
 
-std::vector<CG::Result> Sphere::verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
+std::vector<CG::Result> Sphere::verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
 {
     std::vector<CG::Result> results;
 

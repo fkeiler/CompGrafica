@@ -34,12 +34,12 @@ namespace Luz{
             LinearAlgebra::Vector3Df cor = Ia * res->objectMaterial.Ia;
 
             /* Iluminação Difusa */
-            float fatorDifuso = (res->normal).dot_product(-this->direcao); // Cosseno do angulo entre a normal e a iluminação
+            float fatorDifuso = (-this->direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
             if(fatorDifuso <= 0) return cor;
             cor += (Id*fatorDifuso*res->objectMaterial.Id);
 
             /* Iluminação Especular */
-            LinearAlgebra::Vector4Df reflexao = (direcao + (res->normal * 2)) * direcao.dot_product(res->normal); // Vetor refletido
+            LinearAlgebra::Vector4Df reflexao = ((direcao + res->normal) * direcao.dot_product(res->normal)); // Vetor refletido
             float fatorEspecular = reflexao.dot_product(observador - res->Pint); // Cosseno do angulo entre vetor refletido e o vetor em direção o observador
             if(fatorEspecular <= 0) return cor;
             cor += (Is*powf(fatorEspecular, res->objectMaterial.m)*res->objectMaterial.Is);
@@ -89,7 +89,7 @@ namespace Luz{
             LinearAlgebra::Vector4Df direcao = (res->Pint - origem).normalize();
             float atenuacao =  1 / (atenuacaoLinear * (res->Pint - origem).dot_product(direcao));
             float fatorDifuso = (LinearAlgebra::Vector4Df{0, 0, 0, 0} - direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
-            float anguloRaioSpot = (res->Pint - origem).dot_product(direcao);
+            float anguloRaioSpot = (res->Pint - origem).normalize().dot_product(direcao);
             if(fatorDifuso <= 0 || anguloRaioSpot > cossenoAbertura) return cor;
             cor = cor + (Id*fatorDifuso*res->objectMaterial.Id*atenuacaoLinear);
 

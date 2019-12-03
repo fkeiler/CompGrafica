@@ -5,9 +5,9 @@
 #ifndef TRABALHO_PLANE_HPP
 #define TRABALHO_PLANE_HPP
 
-#include "CG.hpp"
+#include "Colliding.hpp"
 
-class Plane
+class Plane : public Colliding
 {
 public:
     LinearAlgebra::Vector4Df point; // Ponto conhecido do plano
@@ -18,7 +18,7 @@ public:
 
     Plane(); // Construtor padrão
     Plane(LinearAlgebra::Vector4Df ip, LinearAlgebra::Vector4Df in, CG::Material im, std::string li); // Construtor
-    std::vector<CG::Result> verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
+    std::vector<CG::Result> verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
 };
 
 

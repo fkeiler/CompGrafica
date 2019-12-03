@@ -7,7 +7,7 @@
 
 #include "Plane.hpp"
 
-class Cylinder
+class Cylinder : public Colliding
 {
 public:
     float height, radius; // Altura Cilindro e Raio Cilindro
@@ -22,7 +22,7 @@ public:
     // Construtor de cilindro comum com material
     Cylinder(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi, std::string li);
 
-    std::vector<CG::Result> verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
+    std::vector<CG::Result> verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
     LinearAlgebra::Vector4Df normal(LinearAlgebra::Vector4Df Pint);
 };
 

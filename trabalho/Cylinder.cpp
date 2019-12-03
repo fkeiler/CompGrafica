@@ -46,7 +46,7 @@ Cylinder::Cylinder(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebr
     colision = true;
 }
 
-std::vector<CG::Result> Cylinder::verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
+std::vector<CG::Result> Cylinder::verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
 {
     std::vector<CG::Result> results, planeResult;
 
@@ -56,7 +56,7 @@ std::vector<CG::Result> Cylinder::verifyColision(LinearAlgebra::Vector4Df P0, Li
     }
 
     // Verificando colisões com a base do cilindro
-    planeResult = basePlane.verifyColision(P0, d);
+    planeResult = basePlane.verifyCollision(P0, d);
     if(!planeResult.empty()){
         if((planeResult[0].Pint - basePlane.point).norm() <= radius){
             results.push_back(planeResult[0]);
@@ -64,7 +64,7 @@ std::vector<CG::Result> Cylinder::verifyColision(LinearAlgebra::Vector4Df P0, Li
     }
 
     // Verificando colisões com o topo do cilindro
-    planeResult = topPlane.verifyColision(P0, d);
+    planeResult = topPlane.verifyCollision(P0, d);
     if(!planeResult.empty()){
         if((planeResult[0].Pint - topPlane.point).norm() <= radius){
             results.push_back(planeResult[0]);

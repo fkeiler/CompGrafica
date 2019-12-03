@@ -18,7 +18,7 @@ Plane::Plane(LinearAlgebra::Vector4Df ip, LinearAlgebra::Vector4Df in, CG::Mater
     label = li;
 }
 
-std::vector<CG::Result> Plane::verifyColision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
+std::vector<CG::Result> Plane::verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
 {
     std::vector<CG::Result> results;
 

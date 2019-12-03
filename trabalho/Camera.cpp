@@ -34,7 +34,7 @@ LinearAlgebra::Vector4Df Camera::convert(LinearAlgebra::Vector4Df coord)
     return transformationMatrix * coord;
 }
 
-void Camera::renderScenary(Sphere esfera, Plane plano)
+void Camera::renderScenery(std::vector<Colliding*> objetos)
 {
     std::vector<CG::Result> result, tempResult;
     CG::Result noneResult{0,LinearAlgebra::Vector4Df{0, 0, 0, 1},LinearAlgebra::Vector4Df{0, 0, 0, 0},CG::sBlackMaterial(),"Null"};
@@ -50,17 +50,12 @@ void Camera::renderScenary(Sphere esfera, Plane plano)
 
             d = (platePoint - p0).normalize();
 
-            //Calcula colisões
-            tempResult = plano.verifyColision(p0, d);
-            if(!tempResult.empty()){
-                result.insert(result.end(), tempResult.begin(), tempResult.end());
+            for(Colliding* c : objetos){
+                tempResult = c->verifyCollision(p0, d);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
             }
-
-            tempResult = esfera.verifyColision(p0, d);
-            if(!tempResult.empty()){
-                result.insert(result.end(), tempResult.begin(), tempResult.end());
-            }
-
             // Verifica se aconteceu colisão
             if(!result.empty()){
                 // Guarda qual colisão aconteceu primeiro
