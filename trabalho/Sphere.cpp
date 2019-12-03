@@ -98,5 +98,5 @@ LinearAlgebra::Vector4Df Sphere::normal(LinearAlgebra::Vector4Df pint)
 {
     LinearAlgebra::Vector4Df R = pint - center;
 
-    return R/(R.normalize());
+    return R.normalize();
 }
