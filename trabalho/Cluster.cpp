@@ -3,3 +3,5 @@
 //
 
 #include "Cluster.hpp"
+
+Cluster::Cluster()= default;

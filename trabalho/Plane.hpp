@@ -5,9 +5,9 @@
 #ifndef TRABALHO_PLANE_HPP
 #define TRABALHO_PLANE_HPP
 
-#include "Colliding.hpp"
+#include "CG.hpp"
 
-class Plane : public Colliding
+class Plane
 {
 public:
     LinearAlgebra::Vector4Df point; // Ponto conhecido do plano

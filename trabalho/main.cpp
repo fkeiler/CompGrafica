@@ -18,7 +18,7 @@ void display(){
     float radius = 2;
 
     Camera camera(P0, LA, VU, HEIGHT, WIDTH);
-    std::vector<Colliding*> objetos;
+    std::vector<Cluster*> objetos;
 
     sphereCenter = camera.convert(sphereCenter);
 

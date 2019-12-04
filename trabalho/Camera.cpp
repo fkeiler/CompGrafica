@@ -34,7 +34,7 @@ LinearAlgebra::Vector4Df Camera::convert(LinearAlgebra::Vector4Df coord)
     return transformationMatrix * coord;
 }
 
-void Camera::renderScenery(std::vector<Colliding*> objetos)
+void Camera::renderScenery(std::vector<Cluster*> objetos)
 {
     std::vector<CG::Result> result, tempResult;
     CG::Result noneResult{0,LinearAlgebra::Vector4Df{0, 0, 0, 1},LinearAlgebra::Vector4Df{0, 0, 0, 0},CG::sBlackMaterial(),"Null"};
@@ -50,7 +50,7 @@ void Camera::renderScenery(std::vector<Colliding*> objetos)
 
             d = (platePoint - p0).normalize();
 
-            for(Colliding* c : objetos){
+            for(Cluster* c : objetos){
                 tempResult = c->verifyCollision(p0, d);
                 if(!tempResult.empty()){
                     result.insert(result.end(), tempResult.begin(), tempResult.end());

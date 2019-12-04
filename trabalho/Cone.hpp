@@ -5,10 +5,9 @@
 #ifndef TRABALHO_CONE_HPP
 #define TRABALHO_CONE_HPP
 
-#include "CG.hpp"
 #include "Plane.hpp"
 
-class Cone : public Colliding
+class Cone
 {
 public:
     float height, radius, cosTheta; // Altura do cone, Raio do Cone e Coseno do angulo que a geratriz forma com o eixo do cone

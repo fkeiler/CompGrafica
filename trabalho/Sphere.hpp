@@ -6,9 +6,9 @@
 #define TRABALHO_SPHERE_HPP
 
 #include "CG.hpp"
-#include "Colliding.hpp"
 
-class Sphere : public Colliding {
+class Sphere
+{
 public:
     LinearAlgebra::Vector4Df center; // Centro do cilindro
     float radius; // Raio do cilindro

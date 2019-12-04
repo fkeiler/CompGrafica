@@ -22,7 +22,7 @@ public:
 
     Camera( LinearAlgebra::Vector4Df pi, LinearAlgebra::Vector4Df li, LinearAlgebra::Vector4Df vi, int height, int width );
     LinearAlgebra::Vector4Df convert(LinearAlgebra::Vector4Df coord);
-    void renderScenery(std::vector<Colliding*> objetos);
+    void renderScenery(std::vector<Cluster*> objetos);
 };
 
 #endif //TRABALHO_CAMERA_HPP

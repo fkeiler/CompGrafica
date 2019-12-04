@@ -7,7 +7,7 @@
 
 #include "Plane.hpp"
 
-class Cylinder : public Colliding
+class Cylinder
 {
 public:
     float height, radius; // Altura Cilindro e Raio Cilindro
