@@ -68,10 +68,52 @@ Cluster Camera::convertObjects(Cluster objects)
     return returnCluster;
 }
 
+std::vector<CG::Result> Camera::verifyClusterCollision(Cluster cluster, LinearAlgebra::Vector4Df P0i, LinearAlgebra::Vector4Df di)
+{
+    std::vector<CG::Result> result, tempResult;
+
+    // Verificar se colide com o cluster
+    if(!cluster.colisionSphere.verifyCollision(P0i, di).empty())
+    {
+        // Caso tenham clusters dentro do cluster, verificamos possíveis colisões com ele
+        if(!cluster.Clusters.empty()) {
+            for (auto& tempCluster: cluster.Clusters){
+                tempResult = verifyClusterCollision(tempCluster, P0i, di);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
+            }
+        }
+
+        // Verificar colisões com planos
+        if(!cluster.Planes.empty()) {
+            for (auto& plane: cluster.Planes){
+                tempResult = plane.verifyCollision(P0i, di);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
+            }
+        }
+
+        // Verificar colisões com esferas
+        if(!cluster.Spheres.empty()) {
+            for (auto& sphere: cluster.Spheres){
+                tempResult = sphere.verifyCollision(P0i, di);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
 void Camera::renderScenery(Cluster objetcs)
 {
     std::vector<CG::Result> result, tempResult;
     CG::Result noneResult{0,LinearAlgebra::Vector4Df{0, 0, 0, 1},LinearAlgebra::Vector4Df{0, 0, 0, 0},CG::sBlackMaterial(), -127};
+
     LinearAlgebra::Vector4Df platePoint{0, 0, 0, 1}, p0{0, 0, 0, 1};
     float deltaX = sizeHorizontal/(float)nHolesHorizontal, deltaY = sizeVertical/(float)nHolesVertical;
     int minIndex;
@@ -84,12 +126,14 @@ void Camera::renderScenery(Cluster objetcs)
 
             d = (platePoint - p0).normalize();
 
-            for(Cluster* c : objetos){
-                tempResult = c->verifyCollision(p0, d);
+            // Calcula possiveis colisões com o cluster naquele momento
+            if(!objetcs.colisionSphere.verifyCollision(p0, d).empty()){
+                tempResult = verifyClusterCollision(objetcs, p0, d);
                 if(!tempResult.empty()){
                     result.insert(result.end(), tempResult.begin(), tempResult.end());
                 }
             }
+
             // Verifica se aconteceu colisão
             if(!result.empty()){
                 // Guarda qual colisão aconteceu primeiro

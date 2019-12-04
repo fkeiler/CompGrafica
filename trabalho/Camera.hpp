@@ -22,6 +22,7 @@ public:
     Camera( LinearAlgebra::Vector4Df pi, LinearAlgebra::Vector4Df li, LinearAlgebra::Vector4Df vi, int height, int width );
     LinearAlgebra::Vector4Df convertCoord(LinearAlgebra::Vector4Df vector);
     Cluster convertObjects(Cluster objects);
+    std::vector<CG::Result> verifyClusterCollision(Cluster cluster, LinearAlgebra::Vector4Df P0i, LinearAlgebra::Vector4Df di);
     void renderScenery(Cluster objects);
 };
 
