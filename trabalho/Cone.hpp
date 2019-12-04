@@ -14,11 +14,11 @@ public:
     LinearAlgebra::Vector4Df baseCenter, unitaryDirection, vertex; // Centro da base do cone, Vetor unitário que define a direção do cone, Vértice do cone
     Plane basePlane; //Base inferior do Cone
     CG::Material material;
-    std::string label;
+    int id;
     bool colision;
 
     // Construtor de cone comum com material
-    Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi, std::string li);
+    Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi, int li);
 
     std::vector<CG::Result> verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
     LinearAlgebra::Vector4Df normal(LinearAlgebra::Vector4Df Pint);

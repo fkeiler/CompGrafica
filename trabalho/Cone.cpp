@@ -4,14 +4,14 @@
 
 #include "Cone.hpp"
 
-Cone::Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi, std::string li)
+Cone::Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi, int li)
 {
     height = hi;
     radius = ri;
     baseCenter = bi;
     unitaryDirection = ui;
     material = mi;
-    label = li;
+    id = li;
 
     vertex = bi + ui*hi;
     cosTheta = hi/(sqrt(powf(hi, 2) + powf(ri, 2) ));
@@ -19,7 +19,7 @@ Cone::Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vecto
     basePlane.point = bi;
     basePlane.normal = ui*-1;
     basePlane.material = mi;
-    basePlane.label = li;
+    basePlane.id = li;
 
     colision = true;
 }
@@ -73,7 +73,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
                     Pint,
                     normal(Pint),
                     material,
-                    label
+                    id
             });
         }
 
@@ -93,7 +93,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
                     Pint,
                     normal(Pint),
                     material,
-                    label
+                    id
             });
 
             tint = (-b+sqrtf(delta))/(2*a);
@@ -105,7 +105,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
                     Pint,
                     normal(Pint),
                     material,
-                    label
+                    id
             });
         }
 
