@@ -5,21 +5,20 @@
 #include "Sphere.hpp"
 
 // Esfera de colisão
-Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, std::string li)
+Sphere::Sphere()
 {
-    center = ci;
-    radius = ri;
-    label = li;
+    material = CG::sBlackMaterial();
     colision = true;
-}
+    id = -127;
+};
 
 // Esfera comum
-Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi, std::string li)
+Sphere::Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi, int idi)
 {
     center = ci;
     radius = ri;
     material = mi;
-    label = li;
+    id = idi;
     colision = true;
 }
 
@@ -60,7 +59,7 @@ std::vector<CG::Result> Sphere::verifyCollision(LinearAlgebra::Vector4Df P0, Lin
                 Pint,
                 normal(Pint),
                 material,
-                label
+                id
         });
 
         return results;
@@ -75,7 +74,7 @@ std::vector<CG::Result> Sphere::verifyCollision(LinearAlgebra::Vector4Df P0, Lin
                 Pint,
                 normal(Pint),
                 material,
-                label
+                id
         });
 
         tint = (-b+sqrtf(delta))/(2*a);
@@ -87,7 +86,7 @@ std::vector<CG::Result> Sphere::verifyCollision(LinearAlgebra::Vector4Df P0, Lin
                 Pint,
                 normal(Pint),
                 material,
-                label
+                id
         });
 
         return results;

@@ -13,11 +13,11 @@ public:
     LinearAlgebra::Vector4Df point; // Ponto conhecido do plano
     LinearAlgebra::Vector4Df normal;  // Vetor unitário perpendicular ao plano
     CG::Material material;
-    std::string label;
+    int id;
     bool colision;
 
     Plane(); // Construtor padrão
-    Plane(LinearAlgebra::Vector4Df ip, LinearAlgebra::Vector4Df in, CG::Material im, std::string li); // Construtor
+    Plane(LinearAlgebra::Vector4Df ip, LinearAlgebra::Vector4Df in, CG::Material im, int idi); // Construtor
     std::vector<CG::Result> verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
 };
 

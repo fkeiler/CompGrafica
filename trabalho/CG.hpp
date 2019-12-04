@@ -6,7 +6,6 @@
 #define TRABALHO_CG_HPP
 
 #include <iostream>
-#include <string>
 #include <vector>
 #include <cmath>
 
@@ -93,7 +92,7 @@ namespace CG {
         LinearAlgebra::Vector4Df Pint;
         LinearAlgebra::Vector4Df normal;
         Material objectMaterial;
-        std::string label;
+        int id;
     };
 
     inline Material sBlackMaterial(void) {return Material{LinearAlgebra::Vector3Df{0, 0, 0}, LinearAlgebra::Vector3Df{0, 0, 0},LinearAlgebra::Vector3Df{0, 0, 0}, 0};}

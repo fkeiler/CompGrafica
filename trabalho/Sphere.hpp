@@ -13,13 +13,13 @@ public:
     LinearAlgebra::Vector4Df center; // Centro do cilindro
     float radius; // Raio do cilindro
     CG::Material material;
-    std::string label;
+    int id;
     bool colision;
 
     // Construtor de esfera de colisão usada em clusters/cubos
-    Sphere(LinearAlgebra::Vector4Df ci, float ri, std::string li);
+    Sphere();
     // Construtor de esfera comum com material
-    Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi, std::string li);
+    Sphere(LinearAlgebra::Vector4Df ci, float ri, CG::Material mi, int idi);
 
     std::vector<CG::Result> verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d);
     LinearAlgebra::Vector4Df normal(LinearAlgebra::Vector4Df Pint);

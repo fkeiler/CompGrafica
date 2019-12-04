@@ -12,21 +12,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c901495-0b02-4a38-8d17-807c26daa260" name="Default Changelist" comment="Luzes Ambiente e Remota">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cluster.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cluster.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Triangle.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Triangle.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CG.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/CG.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Camera.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Camera.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Camera.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Colliding.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cone.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Cone.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cluster.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Cluster.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cluster.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Cluster.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cylinder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Cylinder.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cylinder.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Cylinder.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plane.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plane.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plane.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plane.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sphere.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Sphere.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sphere.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Sphere.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +129,7 @@
       <workItem from="1573940076217" duration="8137000" />
       <workItem from="1574290515034" duration="292000" />
       <workItem from="1574604683450" duration="530000" />
-      <workItem from="1575415996246" duration="4380000" />
+      <workItem from="1575415996246" duration="11308000" />
     </task>
     <servers />
   </component>

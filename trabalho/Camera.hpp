@@ -6,8 +6,7 @@
 #define TRABALHO_CAMERA_HPP
 
 #include "CG.hpp"
-#include "Sphere.hpp"
-#include "Plane.hpp"
+#include "Cluster.hpp"
 
 class Camera
 {
@@ -21,8 +20,9 @@ public:
     int nHolesVertical, nHolesHorizontal;
 
     Camera( LinearAlgebra::Vector4Df pi, LinearAlgebra::Vector4Df li, LinearAlgebra::Vector4Df vi, int height, int width );
-    LinearAlgebra::Vector4Df convert(LinearAlgebra::Vector4Df coord);
-    void renderScenery(std::vector<Cluster*> objetos);
+    LinearAlgebra::Vector4Df convertCoord(LinearAlgebra::Vector4Df vector);
+    Cluster convertObjects(Cluster objects);
+    void renderScenery(Cluster objects);
 };
 
 #endif //TRABALHO_CAMERA_HPP

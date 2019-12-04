@@ -4,4 +4,8 @@
 
 #include "Cluster.hpp"
 
-Cluster::Cluster()= default;
+Cluster::Cluster(LinearAlgebra::Vector4Df pi, float ri)
+{
+    colisionSphere.center = pi;
+    colisionSphere.radius = ri;
+};

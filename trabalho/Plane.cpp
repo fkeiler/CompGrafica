@@ -9,13 +9,13 @@ Plane::Plane()
     colision = true;
 }
 
-Plane::Plane(LinearAlgebra::Vector4Df ip, LinearAlgebra::Vector4Df in, CG::Material im, std::string li)
+Plane::Plane(LinearAlgebra::Vector4Df ip, LinearAlgebra::Vector4Df in, CG::Material im, int idi)
 {
     point = ip;
     normal = in;
     material = im;
     colision = true;
-    label = li;
+    id = idi;
 }
 
 std::vector<CG::Result> Plane::verifyCollision(LinearAlgebra::Vector4Df P0, LinearAlgebra::Vector4Df d)
@@ -35,7 +35,7 @@ std::vector<CG::Result> Plane::verifyCollision(LinearAlgebra::Vector4Df P0, Line
                 Pint,
                 normal,
                 material,
-                label
+                id
         });
 
         return results;

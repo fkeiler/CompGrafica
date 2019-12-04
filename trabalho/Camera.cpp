@@ -29,15 +29,49 @@ Camera::Camera(LinearAlgebra::Vector4Df pi, LinearAlgebra::Vector4Df li, LinearA
     plateDistance = 4; sizeVertical = 3; sizeHorizontal = 4;
 }
 
-LinearAlgebra::Vector4Df Camera::convert(LinearAlgebra::Vector4Df coord)
+LinearAlgebra::Vector4Df Camera::convertCoord(LinearAlgebra::Vector4Df vector)
 {
-    return transformationMatrix * coord;
+    return transformationMatrix * vector;
 }
 
-void Camera::renderScenery(std::vector<Cluster*> objetos)
+Cluster Camera::convertObjects(Cluster objects)
+{
+    Cluster returnCluster(objects.colisionSphere.center, objects.colisionSphere.radius);
+    returnCluster.colisionSphere.center = convertCoord(returnCluster.colisionSphere.center);
+
+    // Clusters
+    if(!objects.Clusters.empty()){
+        for(auto& cluster: objects.Clusters){
+            returnCluster.Clusters.push_back(convertObjects(cluster));
+        }
+    }
+
+    // Planes
+    if(!objects.Planes.empty()){
+        for(auto& plane: objects.Planes){
+            plane.point = convertCoord(plane.point);
+            plane.normal = convertCoord(plane.normal);
+
+            returnCluster.Planes.push_back(plane);
+        }
+    }
+
+    // Spheres
+    if(!objects.Spheres.empty()){
+        for(auto& sphere: objects.Spheres){
+            sphere.center = convertCoord(sphere.center);
+
+            returnCluster.Spheres.push_back(sphere);
+        }
+    }
+
+    return returnCluster;
+}
+
+void Camera::renderScenery(Cluster objetcs)
 {
     std::vector<CG::Result> result, tempResult;
-    CG::Result noneResult{0,LinearAlgebra::Vector4Df{0, 0, 0, 1},LinearAlgebra::Vector4Df{0, 0, 0, 0},CG::sBlackMaterial(),"Null"};
+    CG::Result noneResult{0,LinearAlgebra::Vector4Df{0, 0, 0, 1},LinearAlgebra::Vector4Df{0, 0, 0, 0},CG::sBlackMaterial(), -127};
     LinearAlgebra::Vector4Df platePoint{0, 0, 0, 1}, p0{0, 0, 0, 1};
     float deltaX = sizeHorizontal/(float)nHolesHorizontal, deltaY = sizeVertical/(float)nHolesVertical;
     int minIndex;

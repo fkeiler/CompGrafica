@@ -4,44 +4,25 @@
 
 #include "Cylinder.hpp"
 
-Cylinder::Cylinder(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, std::string li)
-{
-    height = hi;
-    radius = ri;
-    baseCenter = bi;
-    unitaryDirection = ui;
-    label = li;
-
-    basePlane.point = bi;
-    basePlane.normal = ui*-1;
-    basePlane.label = li;
-
-    topPlane.point = bi+ui*hi;
-    topPlane.normal = ui;
-    topPlane.label = li;
-
-    colision = true;
-}
-
 Cylinder::Cylinder(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vector4Df ui, CG::Material mi,
-                   std::string li)
+                   int idi)
 {
     height = hi;
     radius = ri;
     baseCenter = bi;
     unitaryDirection = ui;
     material = mi;
-    label = li;
+    id = idi;
 
     basePlane.point = bi;
     basePlane.normal = ui*-1;
     basePlane.material = mi;
-    basePlane.label = li;
+    basePlane.id = idi;
 
     topPlane.point = bi+ui*hi;
     topPlane.normal = ui;
     topPlane.material = mi;
-    topPlane.label = li;
+    topPlane.id = idi;
 
     colision = true;
 }
@@ -106,7 +87,7 @@ std::vector<CG::Result> Cylinder::verifyCollision(LinearAlgebra::Vector4Df P0, L
                 Pint,
                 normal(Pint),
                 material,
-                label
+                id
         });
 
         return results;
@@ -121,7 +102,7 @@ std::vector<CG::Result> Cylinder::verifyCollision(LinearAlgebra::Vector4Df P0, L
                 Pint,
                 normal(Pint),
                 material,
-                label
+                id
         });
 
         tint = (-b+sqrtf(delta))/(2*a);
@@ -133,7 +114,7 @@ std::vector<CG::Result> Cylinder::verifyCollision(LinearAlgebra::Vector4Df P0, L
                 Pint,
                 normal(Pint),
                 material,
-                label
+                id
         });
 
         return results;
