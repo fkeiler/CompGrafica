@@ -25,12 +25,12 @@ public:
     std::vector<Cluster> Clusters;
     std::vector<Plane> Planes;
     std::vector<Sphere> Spheres;
-    //std::vector<Cylinder> Cyliders;
-    //std::vector<Cone> Cones;
-    //std::vector<Triangle> Triangles;
+    std::vector<Cylinder> Cylinders;
+    std::vector<Cone> Cones;
+    std::vector<Triangle> Triangles;
     //std::vector<Box> Boxes;
 
-    // Construtor
+    // Constructor
     Cluster(LinearAlgebra::Vector4Df pi, float ri);
 };
 
