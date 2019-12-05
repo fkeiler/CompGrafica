@@ -14,13 +14,13 @@ LinearAlgebra::Vector4Df VU{10, 6, 7.5, 1};
 void display(){
     LinearAlgebra::Vector4Df sphereCenter{5, 2, 10, 1};
     LinearAlgebra::Vector4Df cylinderCenter{10, 0, 7.5, 1};
-    LinearAlgebra::Vector4Df direction{0, 1, 0, 0};
+    LinearAlgebra::Vector4Df direction{0, 0, 1, 0};
     float radius = 2, height = 3;
 
     Cluster objects(sphereCenter, 15), convertedObjects(sphereCenter, 15);
-    Cylinder testCylinder(height, radius, cylinderCenter, direction, CG::sRedMaterial(), 2);
+    Cylinder testCylinder(height, radius, cylinderCenter, direction, CG::Wood(), 2);
     sphereCenter = testCylinder.topPlane.point;
-    Sphere testSphere(sphereCenter, radius, CG::sRedMaterial(), 1);
+    Sphere testSphere(sphereCenter, radius, CG::Wood(), 1);
 
 
     objects.Spheres.push_back(testSphere);

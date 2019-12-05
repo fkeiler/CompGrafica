@@ -66,6 +66,7 @@ Cluster Camera::convertObjects(Cluster objects)
             returnCluster.Spheres.push_back(sphere);
         }
     }
+
     // Cylinders
     if(!objects.Cylinders.empty()){
         for(auto& cylinder: objects.Cylinders){
@@ -181,16 +182,17 @@ void Camera::renderScenery(Cluster objetcs)
     CG::Result noneResult{0,LinearAlgebra::Vector4Df{0, 0, 0, 1},LinearAlgebra::Vector4Df{0, 0, 0, 0},CG::sBlackMaterial(), -127};
 
     LinearAlgebra::Vector4Df platePoint{0, 0, 0, 1}, p0{0, 0, 0, 1};
-    float deltaX = sizeHorizontal/(float)nHolesHorizontal, deltaY = sizeVertical/(float)nHolesVertical;
+    float deltaX = sizeHorizontal/nHolesHorizontal;
+    float deltaY = sizeVertical/nHolesVertical;
     int minIndex;
 
     for(int line = 0; line < nHolesVertical; line++){
         for(int column = 0; column < nHolesHorizontal; column++){
-            platePoint.x = -sizeHorizontal/2 + deltaX/2 + (float)column*deltaX;
-            platePoint.y = sizeVertical/2 + deltaY/2 - (float)line*deltaY;
-            platePoint.z = -(float)plateDistance;
+            platePoint.x = (-sizeHorizontal/2 + deltaX/2 + column*deltaX);
+            platePoint.y = (sizeVertical/2 - deltaY/2 - line*deltaY)*-1;
+            platePoint.z = -plateDistance;
 
-            d = (platePoint - p0).normalize();
+            d = (platePoint - p0);
 
             // Calcula possiveis colisões com o cluster naquele momento
             if(!objetcs.colisionSphere.verifyCollision(p0, d).empty()){
