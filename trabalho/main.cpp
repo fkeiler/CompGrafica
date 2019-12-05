@@ -1,31 +1,36 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 
-#include "Sphere.hpp"
-#include "Cylinder.hpp"
 #include "Camera.hpp"
 #include "Luzes.hpp"
 
-const int WIDTH = 600, HEIGHT = 400;
+const int WIDTH = 500, HEIGHT = 375;
 const int BUFFER_SIZE = WIDTH*HEIGHT*3;
 
-LinearAlgebra::Vector4Df P0{1, 4, 1, 1};
-LinearAlgebra::Vector4Df LA{10, 4, 10, 1};
-LinearAlgebra::Vector4Df VU{10, 6, 10, 1};
+LinearAlgebra::Vector4Df P0{1, -10, 1, 1};
+LinearAlgebra::Vector4Df LA{10, 2, 10, 1};
+LinearAlgebra::Vector4Df VU{10, 8, 10, 1};
 
 void display(){
-    LinearAlgebra::Vector4Df sphereCenter{10, 4, 10, 1};
-    float radius = 2;
+    LinearAlgebra::Vector4Df sphereCenter{10, 2, 10, 1};
+    LinearAlgebra::Vector4Df cylinderCenter{7, 0, 10, 1};
+    LinearAlgebra::Vector4Df direction{0, -1, 0, 0};
+    float radius = 2, height = 3;
+
+    Cluster objects(sphereCenter, 15), convertedObjects(sphereCenter, 15);
+    Cylinder testCylinder(height, radius, cylinderCenter, direction, CG::sRedMaterial(), 2);
+    sphereCenter = testCylinder.topPlane.point;
+    Sphere testSphere(sphereCenter, radius, CG::sRedMaterial(), 1);
+
+
+    objects.Spheres.push_back(testSphere);
+    objects.Cylinders.push_back(testCylinder);
 
     Camera camera(P0, LA, VU, HEIGHT, WIDTH);
-    std::vector<Cluster*> objetos;
 
-    sphereCenter = camera.convert(sphereCenter);
+    convertedObjects = camera.convertObjects(objects);
 
-    Sphere *sphere = new Sphere(sphereCenter, radius, CG::sRedMaterial(), "Test Sphere");
-    objetos.push_back(sphere);
-
-    camera.renderScenery(objetos);
+    camera.renderScenery(convertedObjects);
 
     float *data;
     data = new float[BUFFER_SIZE]; // Buffer de pixels
@@ -44,7 +49,7 @@ void display(){
     teste2->Id = {2, 2, 2};
     teste2->Is = {5, 5, 5};
     teste2->direcao = {0, -1, 0, 0};
-    luzes.push_back(teste);
+    luzes.push_back(teste2);
 
     for(int i = 0; i < camera.buffer.size(); i++){
         LinearAlgebra::Vector3Df *cor = new LinearAlgebra::Vector3Df{0, 0, 0};

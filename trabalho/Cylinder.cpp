@@ -20,7 +20,7 @@ Cylinder::Cylinder(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebr
     basePlane.id = idi;
 
     topPlane.point = bi+ui*hi;
-    topPlane.normal = ui;
+    topPlane.normal = ui*-1;
     topPlane.material = mi;
     topPlane.id = idi;
 
@@ -81,41 +81,50 @@ std::vector<CG::Result> Cylinder::verifyCollision(LinearAlgebra::Vector4Df P0, L
         // Uma colisão
         float tint = -b/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
+        float pointHeight = (Pint-baseCenter).dot_product(unitaryDirection);
 
-        results.push_back(CG::Result{
-                tint,
-                Pint,
-                normal(Pint),
-                material,
-                id
-        });
+        if(0 <= pointHeight && pointHeight <= height) {
+            results.push_back(CG::Result{
+                    tint,
+                    Pint,
+                    normal(Pint),
+                    material,
+                    id
+            });
+        }
 
         return results;
     } else {
         // Duas colisões
         float tint = (-b-sqrtf(delta))/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
+        float pointHeight = (Pint-baseCenter).dot_product(unitaryDirection);
 
         // Colisão 1
-        results.push_back(CG::Result{
-                tint,
-                Pint,
-                normal(Pint),
-                material,
-                id
-        });
+        if(0 <= pointHeight && pointHeight <= height) {
+            results.push_back(CG::Result{
+                    tint,
+                    Pint,
+                    normal(Pint),
+                    material,
+                    id
+            });
+        }
 
         tint = (-b+sqrtf(delta))/(2*a);
         Pint =  P0 + d*tint;
+        pointHeight = (Pint-baseCenter).dot_product(unitaryDirection);
 
         // Colisão 2
-        results.push_back(CG::Result{
-                tint,
-                Pint,
-                normal(Pint),
-                material,
-                id
-        });
+        if(0 <= pointHeight && pointHeight <= height) {
+            results.push_back(CG::Result{
+                    tint,
+                    Pint,
+                    normal(Pint),
+                    material,
+                    id
+            });
+        }
 
         return results;
     }

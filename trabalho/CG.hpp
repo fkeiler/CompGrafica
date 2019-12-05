@@ -97,7 +97,8 @@ namespace CG {
 
     inline Material sBlackMaterial(void) {return Material{LinearAlgebra::Vector3Df{0, 0, 0}, LinearAlgebra::Vector3Df{0, 0, 0},LinearAlgebra::Vector3Df{0, 0, 0}, 0};}
     inline Material sRedMaterial(void) {return Material{LinearAlgebra::Vector3Df{1, 0, 0}, LinearAlgebra::Vector3Df{0.5, 0, 0},LinearAlgebra::Vector3Df{0.1, 0.1, 0.1}, 0.4};}
-    inline Material sGrayMaterial(void) {return Material{LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960}, LinearAlgebra::Vector3Df{0, 0, 0},LinearAlgebra::Vector3Df{0, 0, 0}, 0};}
+    inline Material sGreenMaterial(void) {return Material{LinearAlgebra::Vector3Df{0, 1, 0}, LinearAlgebra::Vector3Df{0, 0.5, 0},LinearAlgebra::Vector3Df{0.1, 0.1, 0.1}, 0.4};}
+    inline Material sGrayMaterial(void) {return Material{LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960}, LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960},LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960}, 0.3};}
 }
 
 

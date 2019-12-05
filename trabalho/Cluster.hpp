@@ -10,9 +10,8 @@
 // Objetos
 #include "Plane.hpp"
 #include "Sphere.hpp"
-
-/*
 #include "Cylinder.hpp"
+/*
 #include "Cone.hpp"
 #include "Triangle.hpp"
 #include "Box.hpp"
@@ -26,12 +25,13 @@ public:
     std::vector<Plane> Planes;
     std::vector<Sphere> Spheres;
     std::vector<Cylinder> Cylinders;
-    std::vector<Cone> Cones;
-    std::vector<Triangle> Triangles;
+    //std::vector<Cone> Cones;
+    //std::vector<Triangle> Triangles;
     //std::vector<Box> Boxes;
 
     // Constructor
     Cluster(LinearAlgebra::Vector4Df pi, float ri);
+    //Cluster scenario();
 };
 
 #endif //TRABALHO_CLUSTER_HPP

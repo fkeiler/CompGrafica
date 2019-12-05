@@ -69,11 +69,15 @@ Cluster Camera::convertObjects(Cluster objects)
         for(auto& cylinder: objects.Cylinders){
             cylinder.baseCenter = convertCoord(cylinder.baseCenter);
             cylinder.unitaryDirection = convertCoord(cylinder.unitaryDirection);
+            cylinder.basePlane.point = convertCoord(cylinder.basePlane.point);
+            cylinder.basePlane.normal = convertCoord(cylinder.basePlane.normal);
+            cylinder.topPlane.point = convertCoord(cylinder.topPlane.point);
+            cylinder.topPlane.normal = convertCoord(cylinder.topPlane.normal);
 
             returnCluster.Cylinders.push_back(cylinder);
         }
     }
-
+/*
     // Cones
     if(!objects.Cones.empty()){
         for(auto& cone: objects.Cones){
@@ -100,7 +104,7 @@ Cluster Camera::convertObjects(Cluster objects)
             returnCluster.Cones.push_back(cone);
         }
     }
-
+*/
     return returnCluster;
 }
 
@@ -135,6 +139,16 @@ std::vector<CG::Result> Camera::verifyClusterCollision(Cluster cluster, LinearAl
         if(!cluster.Spheres.empty()) {
             for (auto& sphere: cluster.Spheres){
                 tempResult = sphere.verifyCollision(P0i, di);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
+            }
+        }
+
+        // Verificar colisões com cilindros
+        if(!cluster.Cylinders.empty()) {
+            for (auto& cylinder: cluster.Cylinders){
+                tempResult = cylinder.verifyCollision(P0i, di);
                 if(!tempResult.empty()){
                     result.insert(result.end(), tempResult.begin(), tempResult.end());
                 }
