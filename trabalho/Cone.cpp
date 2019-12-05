@@ -13,8 +13,8 @@ Cone::Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vecto
     material = mi;
     id = li;
 
-    vertex = bi;
-    vertex.y += hi;
+    vertex = bi+unitaryDirection*height;
+    //vertex.y += hi;
     cosTheta = hi/(sqrtf(powf(hi, 2) + powf(ri, 2) ));
 
     basePlane.point = bi;
@@ -68,7 +68,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
         float tint = (-1*b)/(a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        if(0 < (vertex - Pint).dot_product(unitaryDirection) <= height){
+        if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height){
             results.push_back(CG::Result{
                     tint,
                     Pint,
@@ -78,7 +78,6 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
             });
         }
 
-
         return results;
     }
     else{
@@ -86,7 +85,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
         float tint = (-1*b -sqrtf(delta))/a;
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        if(0 < (vertex - Pint).dot_product(unitaryDirection) <= height) {
+        if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height) {
 
             // Colisão 1
             results.push_back(CG::Result{
@@ -100,7 +99,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
 
         tint = (-1*b +sqrtf(delta))/a;
         Pint =  P0 + d*tint;
-        if( 0 < (vertex - Pint).dot_product(unitaryDirection) <= height) {
+        if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height) {
             // Colisão 2
             results.push_back(CG::Result{
                     tint,
