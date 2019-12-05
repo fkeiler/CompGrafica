@@ -64,6 +64,42 @@ Cluster Camera::convertObjects(Cluster objects)
             returnCluster.Spheres.push_back(sphere);
         }
     }
+    // Cylinders
+    if(!objects.Cylinders.empty()){
+        for(auto& cylinder: objects.Cylinders){
+            cylinder.baseCenter = convertCoord(cylinder.baseCenter);
+            cylinder.unitaryDirection = convertCoord(cylinder.unitaryDirection);
+
+            returnCluster.Cylinders.push_back(cylinder);
+        }
+    }
+
+    // Cones
+    if(!objects.Cones.empty()){
+        for(auto& cone: objects.Cones){
+            cone.vertex = convertCoord(cone.vertex);
+            cone.baseCenter = convertCoord(cone.baseCenter);
+            cone.unitaryDirection = convertCoord(cone.unitaryDirection);
+
+            returnCluster.Cones.push_back(cone);
+        }
+    }
+    // Triangles
+    if(!objects.Triangles.empty()){
+        for(auto& triangle: objects.Triangles){
+            triangle.p1 = convertCoord(triangle.p1);
+            triangle.p2 = convertCoord(triangle.p2);
+            triangle.p3 = convertCoord(triangle.p3);
+
+            triangle.vertices.clear();
+
+            triangle.vertices.push_back(triangle.p1);
+            triangle.vertices.push_back(triangle.p2);
+            triangle.vertices.push_back(triangle.p3);
+
+            returnCluster.Triangles.push_back(triangle);
+        }
+    }
 
     return returnCluster;
 }
