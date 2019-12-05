@@ -9,6 +9,7 @@
 #include "CG.hpp"
 
 class Box {
+public:
     LinearAlgebra::Vector4Df min;
     LinearAlgebra::Vector4Df max;
     CG::Material material;

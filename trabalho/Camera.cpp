@@ -94,7 +94,7 @@ Cluster Camera::convertObjects(Cluster objects)
         }
     }
 
-/*
+
     // Triangles
     if(!objects.Triangles.empty()){
         for(auto& triangle: objects.Triangles){
@@ -102,16 +102,20 @@ Cluster Camera::convertObjects(Cluster objects)
             triangle.p2 = convertCoord(triangle.p2);
             triangle.p3 = convertCoord(triangle.p3);
 
-            triangle.vertices.clear();
-
-            triangle.vertices.push_back(triangle.p1);
-            triangle.vertices.push_back(triangle.p2);
-            triangle.vertices.push_back(triangle.p3);
-
             returnCluster.Triangles.push_back(triangle);
         }
     }
-*/
+
+    // Boxes
+    if(!objects.Boxes.empty()){
+        for(auto& box: objects.Boxes){
+            box.min = convertCoord(box.min);
+            box.max = convertCoord(box.max);
+
+            returnCluster.Boxes.push_back(box);
+        }
+    }
+
     return returnCluster;
 }
 
@@ -165,6 +169,26 @@ std::vector<CG::Result> Camera::verifyClusterCollision(Cluster cluster, LinearAl
         // Verificar colisões com cones
         if(!cluster.Cones.empty()) {
             for (auto& cone: cluster.Cones){
+                tempResult = cone.verifyCollision(P0i, di);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
+            }
+        }
+
+        // Verificar colisões com triangulos
+        if(!cluster.Triangles.empty()) {
+            for (auto& cone: cluster.Triangles){
+                tempResult = cone.verifyCollision(P0i, di);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
+            }
+        }
+
+        // Verificar colisões com boxes
+        if(!cluster.Boxes.empty()) {
+            for (auto& cone: cluster.Boxes){
                 tempResult = cone.verifyCollision(P0i, di);
                 if(!tempResult.empty()){
                     result.insert(result.end(), tempResult.begin(), tempResult.end());

@@ -10,7 +10,6 @@
 class Triangle {
 public:
     LinearAlgebra::Vector4Df p1, p2, p3; // Vertices do Triângulo
-    std::vector<LinearAlgebra::Vector4Df> vertices;
     CG::Material material;
     int id;
     bool colision;
