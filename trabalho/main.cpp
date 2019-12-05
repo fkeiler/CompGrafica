@@ -37,19 +37,11 @@ void display(){
 
     std::vector<Luz::Luz*> luzes;
 
-    Luz::Remota *teste = new Luz::Remota();
-    teste->Ia = {0.1, 0.1, 0.1};
-    teste->Id = {1, 1, 1};
-    teste->Is = {10, 10, 10};
-    teste->direcao = {0, 1, 0, 0};
-    luzes.push_back(teste);
+    Luz::Remota teste({0, 1, 0, 0}, {0.1, 0.1, 0.1}, {1, 1, 1}, {0.1, 0.1, 0.1});
+    luzes.push_back(&teste);
 
-    Luz::Remota *teste2 = new Luz::Remota();
-    teste2->Ia = {0.1, 0.1, 0.1};
-    teste2->Id = {2, 2, 2};
-    teste2->Is = {5, 5, 5};
-    teste2->direcao = {0, -1, 0, 0};
-    luzes.push_back(teste2);
+    Luz::Remota teste2({0, -1, 0, 0}, {0.1, 0.1, 0.1}, {2, 2, 2}, {0.1, 0.1, 0.1});
+    luzes.push_back(&teste2);
 
     for(int i = 0; i < camera.buffer.size(); i++){
         LinearAlgebra::Vector3Df *cor = new LinearAlgebra::Vector3Df{0, 0, 0};

@@ -6,7 +6,9 @@
 
 Camera::Camera(LinearAlgebra::Vector4Df pi, LinearAlgebra::Vector4Df li, LinearAlgebra::Vector4Df vi, int height, int width)
 {
-    P0 = pi; lookAt = li; viewUp = vi; // P0, Look At, View UP
+    P0 = pi;
+    lookAt = li;
+    viewUp = vi; // P0, Look At, View UP
     nHolesVertical = height; nHolesHorizontal = width;
 
     // Criando matriz de transformação
@@ -26,7 +28,7 @@ Camera::Camera(LinearAlgebra::Vector4Df pi, LinearAlgebra::Vector4Df li, LinearA
     transformationMatrix._matrix[1][3] = -P0.dot_product(Jc);
     transformationMatrix._matrix[2][3] = -P0.dot_product(Kc);
 
-    plateDistance = 4; sizeVertical = 3; sizeHorizontal = 4;
+    plateDistance = 3; sizeVertical = 3; sizeHorizontal = 4;
 }
 
 LinearAlgebra::Vector4Df Camera::convertCoord(LinearAlgebra::Vector4Df vector)
