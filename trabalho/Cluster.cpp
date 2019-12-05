@@ -10,8 +10,12 @@ Cluster::Cluster(LinearAlgebra::Vector4Df pi, float ri)
     colisionSphere.radius = ri;
 };
 
-/*
+
 Cluster Cluster::scenario()
 {
-    Cluster scenaryObjects();
-}*/
+    Cluster scenaryObjects({10, 0, 10, 1}, 20);
+
+    float fenceHeigh = 1.1;
+
+    return scenaryObjects;
+}

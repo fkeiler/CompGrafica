@@ -31,7 +31,7 @@ public:
 
     // Constructor
     Cluster(LinearAlgebra::Vector4Df pi, float ri);
-    //Cluster scenario();
+    Cluster scenario();
 };
 
 #endif //TRABALHO_CLUSTER_HPP
