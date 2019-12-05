@@ -79,17 +79,21 @@ Cluster Camera::convertObjects(Cluster objects)
             returnCluster.Cylinders.push_back(cylinder);
         }
     }
-/*
+
     // Cones
     if(!objects.Cones.empty()){
         for(auto& cone: objects.Cones){
             cone.vertex = convertCoord(cone.vertex);
             cone.baseCenter = convertCoord(cone.baseCenter);
             cone.unitaryDirection = convertCoord(cone.unitaryDirection);
+            cone.basePlane.point = convertCoord(cone.basePlane.point);
+            cone.basePlane.normal = convertCoord(cone.basePlane.normal);
 
             returnCluster.Cones.push_back(cone);
         }
     }
+
+/*
     // Triangles
     if(!objects.Triangles.empty()){
         for(auto& triangle: objects.Triangles){
@@ -151,6 +155,16 @@ std::vector<CG::Result> Camera::verifyClusterCollision(Cluster cluster, LinearAl
         if(!cluster.Cylinders.empty()) {
             for (auto& cylinder: cluster.Cylinders){
                 tempResult = cylinder.verifyCollision(P0i, di);
+                if(!tempResult.empty()){
+                    result.insert(result.end(), tempResult.begin(), tempResult.end());
+                }
+            }
+        }
+
+        // Verificar colisões com cones
+        if(!cluster.Cones.empty()) {
+            for (auto& cone: cluster.Cones){
+                tempResult = cone.verifyCollision(P0i, di);
                 if(!tempResult.empty()){
                     result.insert(result.end(), tempResult.begin(), tempResult.end());
                 }

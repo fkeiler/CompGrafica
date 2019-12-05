@@ -17,7 +17,7 @@ Cone::Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vecto
     cosTheta = hi/(sqrt(powf(hi, 2) + powf(ri, 2) ));
 
     basePlane.point = bi;
-    basePlane.normal = ui*-1;
+    basePlane.normal = ui;
     basePlane.material = mi;
     basePlane.id = li;
 

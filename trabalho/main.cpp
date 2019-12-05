@@ -7,14 +7,14 @@
 const int WIDTH = 500, HEIGHT = 375;
 const int BUFFER_SIZE = WIDTH*HEIGHT*3;
 
-LinearAlgebra::Vector4Df P0{1, -10, 1, 1};
-LinearAlgebra::Vector4Df LA{10, 2, 10, 1};
-LinearAlgebra::Vector4Df VU{10, 8, 10, 1};
+LinearAlgebra::Vector4Df P0{2.5, 2, 7.5, 1};
+LinearAlgebra::Vector4Df LA{10, 2, 7.5, 1};
+LinearAlgebra::Vector4Df VU{10, 6, 7.5, 1};
 
 void display(){
-    LinearAlgebra::Vector4Df sphereCenter{10, 2, 10, 1};
-    LinearAlgebra::Vector4Df cylinderCenter{7, 0, 10, 1};
-    LinearAlgebra::Vector4Df direction{0, -1, 0, 0};
+    LinearAlgebra::Vector4Df sphereCenter{5, 2, 10, 1};
+    LinearAlgebra::Vector4Df cylinderCenter{10, 0, 7.5, 1};
+    LinearAlgebra::Vector4Df direction{0, 1, 0, 0};
     float radius = 2, height = 3;
 
     Cluster objects(sphereCenter, 15), convertedObjects(sphereCenter, 15);
