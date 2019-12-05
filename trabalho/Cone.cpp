@@ -65,7 +65,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
     }
     else if(delta == 0) {
         // Uma colisão
-        float tint = (-1*b)/(a);
+        float tint = (-1*b)/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
         if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height){
@@ -82,7 +82,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
     }
     else{
         // Duas colisões
-        float tint = (-1*b -sqrtf(delta))/a;
+        float tint = (-1*b -sqrtf(delta))/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
         if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height) {
@@ -97,7 +97,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
             });
         }
 
-        tint = (-1*b +sqrtf(delta))/a;
+        tint = (-1*b +sqrtf(delta))/(2*a);
         Pint =  P0 + d*tint;
         if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height) {
             // Colisão 2
