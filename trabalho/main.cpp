@@ -17,14 +17,14 @@ void display(){
     LinearAlgebra::Vector4Df direction{0, 0, 1, 0};
     float radius = 2, height = 3;
 
-    Cluster objects(sphereCenter, 15), convertedObjects(sphereCenter, 15);
     Cylinder testCylinder(height, radius, cylinderCenter, direction, CG::Wood(), 2);
     sphereCenter = testCylinder.topPlane.point;
     Sphere testSphere(sphereCenter, radius, CG::Wood(), 1);
 
-
-    objects.Spheres.push_back(testSphere);
-    objects.Cylinders.push_back(testCylinder);
+    Cluster objects(sphereCenter, 15), convertedObjects(sphereCenter, 15);
+    objects = objects.scenario();
+    //objects.Spheres.push_back(testSphere);
+    //objects.Cylinders.push_back(testCylinder);
 
     Camera camera(P0, LA, VU, HEIGHT, WIDTH);
 

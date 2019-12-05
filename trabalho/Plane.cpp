@@ -28,15 +28,18 @@ std::vector<CG::Result> Plane::verifyCollision(LinearAlgebra::Vector4Df P0, Line
     }
     else {
         float tint = ((point - P0).dot_product(normal))/(d.dot_product(normal));
-        LinearAlgebra::Vector4Df Pint = P0 + d*tint;
 
-        results.push_back(CG::Result{
-                tint,
-                Pint,
-                normal,
-                material,
-                id
-        });
+        if(tint > 0) {
+            LinearAlgebra::Vector4Df Pint = P0 + d * tint;
+
+            results.push_back(CG::Result{
+                    tint,
+                    Pint,
+                    normal,
+                    material,
+                    id
+            });
+        }
 
         return results;
     }

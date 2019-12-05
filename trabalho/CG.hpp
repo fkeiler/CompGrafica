@@ -100,6 +100,8 @@ namespace CG {
     inline Material sGreenMaterial(void) {return Material{LinearAlgebra::Vector3Df{0, 1, 0}, LinearAlgebra::Vector3Df{0, 0.5, 0},LinearAlgebra::Vector3Df{0.1, 0.1, 0.1}, 0.4};}
     inline Material sGrayMaterial(void) {return Material{LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960}, LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960},LinearAlgebra::Vector3Df{0.41960, 0.41960, 0.41960}, 0.3};}
     inline Material Wood(void) {return Material{LinearAlgebra::Vector3Df{0.4, 0.23921, 0.07843}, LinearAlgebra::Vector3Df{0.4, 0.23921, 0.07843},LinearAlgebra::Vector3Df{0.4, 0.23921, 0.07843}, 0.1};}
+    inline Material WaterTank(void) {return Material{LinearAlgebra::Vector3Df{0, 0.29804, 0.59215}, LinearAlgebra::Vector3Df{0, 0.29804, 0.59215},LinearAlgebra::Vector3Df{0, 0.29804, 0.59215}, 0.1};}
+
 }
 
 
