@@ -13,8 +13,8 @@ Cone::Cone(float hi, float ri, LinearAlgebra::Vector4Df bi, LinearAlgebra::Vecto
     material = mi;
     id = li;
 
-    vertex = bi;
-    vertex.y += hi;
+    vertex = bi+unitaryDirection*height;
+    //vertex.y += hi;
     cosTheta = hi/(sqrtf(powf(hi, 2) + powf(ri, 2) ));
 
     basePlane.point = bi;
@@ -47,7 +47,7 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
     float a, b, c, delta;
 
     a = powf((d.dot_product(unitaryDirection)), 2) - d.dot_product(d)*powf(cosTheta, 2);
-    b = powf(cosTheta, 2)*(v.dot_product(d)) - (v.dot_product(unitaryDirection)*d.dot_product(unitaryDirection));
+    b = 2*(powf(cosTheta, 2)*(v.dot_product(d)) - (v.dot_product(unitaryDirection)*d.dot_product(unitaryDirection)));
     c = powf((v.dot_product(unitaryDirection)), 2) - v.dot_product(v)*powf(cosTheta, 2);
 
     delta = powf(b,2) - 4*a*c;
@@ -65,10 +65,10 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
     }
     else if(delta == 0) {
         // Uma colisão
-        float tint = (-b)/(a);
+        float tint = (-1*b)/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        if((vertex - Pint).dot_product(unitaryDirection) <= height){
+        if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height){
             results.push_back(CG::Result{
                     tint,
                     Pint,
@@ -78,15 +78,14 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
             });
         }
 
-
         return results;
     }
     else{
         // Duas colisões
-        float tint = (-b -sqrtf(delta))/a;
+        float tint = (-1*b -sqrtf(delta))/(2*a);
         LinearAlgebra::Vector4Df Pint =  P0 + d*tint;
 
-        if((vertex - Pint).dot_product(unitaryDirection) <= height){
+        if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height) {
 
             // Colisão 1
             results.push_back(CG::Result{
@@ -96,10 +95,11 @@ std::vector<CG::Result> Cone::verifyCollision(LinearAlgebra::Vector4Df P0, Linea
                     material,
                     id
             });
+        }
 
-            tint = (-b +sqrtf(delta))/a;
-            Pint =  P0 + d*tint;
-
+        tint = (-1*b +sqrtf(delta))/(2*a);
+        Pint =  P0 + d*tint;
+        if( 0 <= (vertex - Pint).dot_product(unitaryDirection) && (vertex - Pint).dot_product(unitaryDirection)  <= height) {
             // Colisão 2
             results.push_back(CG::Result{
                     tint,
