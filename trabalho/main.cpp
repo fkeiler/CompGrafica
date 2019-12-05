@@ -8,8 +8,8 @@ const int WIDTH = 500, HEIGHT = 375;
 const int BUFFER_SIZE = WIDTH*HEIGHT*3;
 
 LinearAlgebra::Vector4Df P0{2.5, 2, 7.5, 1};
-LinearAlgebra::Vector4Df LA{10, 2, 7.5, 1};
-LinearAlgebra::Vector4Df VU{10, 6, 7.5, 1};
+LinearAlgebra::Vector4Df LA{15, 2, 15, 1};
+LinearAlgebra::Vector4Df VU{15, 6, 15, 1};
 
 void display(){
     LinearAlgebra::Vector4Df sphereCenter{5, 2, 10, 1};
@@ -37,10 +37,10 @@ void display(){
 
     std::vector<Luz::Luz*> luzes;
 
-    Luz::Remota teste({0, 1, 0, 0}, {0.1, 0.1, 0.1}, {1, 1, 1}, {0.1, 0.1, 0.1});
+    Luz::Remota teste({0, -1, -1, 0}, {0.1, 0.1, 0.1}, {1, 1, 1}, {0.1, 0.1, 0.1});
     luzes.push_back(&teste);
 
-    Luz::Remota teste2({0, -1, 0, 0}, {0.1, 0.1, 0.1}, {2, 2, 2}, {0.1, 0.1, 0.1});
+    Luz::Remota teste2({0, 0, 1, 0}, {0.1, 0.1, 0.1}, {1, 1, 1}, {0.1, 0.1, 0.1});
     luzes.push_back(&teste2);
 
     for(int i = 0; i < camera.buffer.size(); i++){

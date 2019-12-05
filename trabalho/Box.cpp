@@ -19,18 +19,18 @@ std::vector<CG::Result> Box::verifyCollision(LinearAlgebra::Vector4Df P0, Linear
     float tmax = (max.x - P0.x) / d.x;
 
     if (tmin > tmax){
-        tmin += tmax;
-        tmax = tmin - tmax;
-        tmin -= tmax;
+        float aux = tmin;
+        tmin = tmax;
+        tmax = aux;
     }
 
     float tymin = (min.y - P0.y) / d.y;
     float tymax = (max.y - P0.y) / d.y;
 
     if (tymin > tymax) {
-        tymin += tymax;
-        tymax = tymin - tymax;
-        tymin -= tymax;
+        float aux = tymin;
+        tymin = tymax;
+        tymax = aux;
     }
 
     if ((tmin > tymax) || (tymin > tmax))
@@ -46,9 +46,9 @@ std::vector<CG::Result> Box::verifyCollision(LinearAlgebra::Vector4Df P0, Linear
     float tzmax = (max.z - P0.z) / d.z;
 
     if (tzmin > tzmax) {
-        tzmin += tzmax;
-        tzmax = tzmin - tzmax;
-        tzmin -= tzmax;
+        float aux = tzmin;
+        tzmin = tzmax;
+        tzmax = aux;
     }
 
     if ((tmin > tzmax) || (tzmin > tmax))
