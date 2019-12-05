@@ -9,9 +9,6 @@ Triangle::Triangle(LinearAlgebra::Vector4Df p1i, LinearAlgebra::Vector4Df p2i, L
     p1 = p1i;
     p2 = p2i;
     p3 = p3i;
-    vertices.push_back(p1);
-    vertices.push_back(p2);
-    vertices.push_back(p3);
     material = mi;
     id = idi;
 }
