@@ -101,7 +101,7 @@ Cluster Camera::convertObjects(Cluster objects)
             triangle.vertices.push_back(triangle.p2);
             triangle.vertices.push_back(triangle.p3);
 
-            returnCluster.Cones.push_back(cone);
+            returnCluster.Triangles.push_back(triangle);
         }
     }
 */

@@ -9,94 +9,139 @@
 
 namespace Luz{
     struct Luz {
-        public:
-            virtual LinearAlgebra::Vector3Df iluminar(CG::Result *res, LinearAlgebra::Vector4Df observador) = 0;
+    public:
+        virtual LinearAlgebra::Vector3Df iluminar(CG::Result *res, LinearAlgebra::Vector4Df observador) = 0;
     };
 
-    struct Ambiente : public Luz{
-        struct {
-            LinearAlgebra::Vector3Df intensidade;
-        };
+    class Ambiente : public Luz{
+    public:
+        LinearAlgebra::Vector3Df intensidade;
+
+        Ambiente(LinearAlgebra::Vector3Df cor){
+            intensidade = cor;
+        }
 
         LinearAlgebra::Vector3Df iluminar(CG::Result *res, LinearAlgebra::Vector4Df observador){
-            return this->intensidade * res->objectMaterial.Ia;
+            return intensidade * res->objectMaterial.Ia;
         }
     };
 
-    struct Remota : public Luz{
-        struct{
-            LinearAlgebra::Vector4Df direcao; // Vetor na direção dos raios
-            LinearAlgebra::Vector3Df Ia, Id, Is; // Intensidade ambiente, difusa, especular
-        };
+    class Remota : public Luz{
+    public:
+        LinearAlgebra::Vector4Df direcao; // Vetor na direção dos raios
+        LinearAlgebra::Vector3Df Ia, Id, Is; // Intensidade ambiente, difusa, especular
 
-        LinearAlgebra::Vector3Df iluminar(CG::Result *res, LinearAlgebra::Vector4Df observador){
+        Remota(LinearAlgebra::Vector4Df dir, LinearAlgebra::Vector3Df Amb, LinearAlgebra::Vector3Df Dir, LinearAlgebra::Vector3Df Spec){
+            direcao = dir.normalize();
+            Ia = Amb;
+            Id = Dir;
+            Is = Spec;
+        }
+
+        LinearAlgebra::Vector3Df iluminar(CG::Result *res, LinearAlgebra::Vector4Df observador) override{
             /* Iluminação Ambiente */
             LinearAlgebra::Vector3Df cor = Ia * res->objectMaterial.Ia;
 
             /* Iluminação Difusa */
-            float fatorDifuso = (-this->direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
-            if(fatorDifuso <= 0) return cor;
+            float fatorDifuso = (-direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
+            if(fatorDifuso < 0) return cor;
             cor += (Id*fatorDifuso*res->objectMaterial.Id);
 
             /* Iluminação Especular */
-            LinearAlgebra::Vector4Df reflexao = ((direcao + res->normal) * direcao.dot_product(res->normal)); // Vetor refletido
+            LinearAlgebra::Vector4Df reflexao =  direcao - (res->normal * 2 * direcao.dot_product(res->normal)); // Vetor refletido
             float fatorEspecular = reflexao.dot_product(observador - res->Pint); // Cosseno do angulo entre vetor refletido e o vetor em direção o observador
-            if(fatorEspecular <= 0) return cor;
+            if(fatorEspecular < 0) return cor;
             cor += (Is*powf(fatorEspecular, res->objectMaterial.m)*res->objectMaterial.Is);
 
+            if(cor.x > 1) cor.x = 1;
+            if(cor.y > 1) cor.y = 1;
+            if(cor.z > 1) cor.z = 1;
+
             return cor;
         }
     };
 
-    struct Pontual : public Luz{
-        struct{
-            LinearAlgebra::Vector4Df origem;
-            LinearAlgebra::Vector3Df Ia, Id, Is;
-            float atenuacaoLinear;
-        };
+    class Pontual : public Luz{
+    public:
+        LinearAlgebra::Vector4Df origem;
+        LinearAlgebra::Vector3Df Ia, Id, Is;
+        float atenuacaoLinear;
+
+        Pontual(LinearAlgebra::Vector4Df o, LinearAlgebra::Vector3Df amb, LinearAlgebra::Vector3Df dif, LinearAlgebra::Vector3Df spc, float a){
+            origem = o;
+            Ia = amb;
+            Id = dif;
+            Is = spc;
+            atenuacaoLinear = a;
+        }
 
         LinearAlgebra::Vector3Df iluminar(CG::Result *res, LinearAlgebra::Vector4Df observador){
             /* Iluminação Ambiente */
             LinearAlgebra::Vector3Df cor = Ia * res->objectMaterial.Ia;
 
             /* Iluminação Difusa */
-            LinearAlgebra::Vector4Df direcao = (res->Pint - origem).normalize();
-            float atenuacao =  1 / (atenuacaoLinear * (res->Pint - origem).dot_product(direcao));
-            float fatorDifuso = (LinearAlgebra::Vector4Df{0, 0, 0, 0} - direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
-            if(fatorDifuso <= 0) return cor;
-            cor += (Id*fatorDifuso*res->objectMaterial.Id*atenuacaoLinear);
+            LinearAlgebra::Vector4Df direcao = (origem - res->Pint);
+            float atenuacao = 1 / (direcao.norm() * atenuacaoLinear);
+            direcao = direcao.normalize();
+            float fatorDifuso = (-direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
+            if(fatorDifuso < 0) return cor;
+            cor += (Id * fatorDifuso * res->objectMaterial.Id * atenuacao);
 
             /* Iluminação Especular */
-            LinearAlgebra::Vector4Df reflexao = (direcao + (res->normal * 2)) * direcao.dot_product(res->normal); // Vetor refletido
+            LinearAlgebra::Vector4Df reflexao =  direcao - (res->normal * 2 * direcao.dot_product(res->normal)); // Vetor refletido
             float fatorEspecular = reflexao.dot_product(observador - res->Pint); // Cosseno do angulo entre vetor refletido e o vetor em direção o observador
-            cor += (Is*powf(fatorEspecular, res->objectMaterial.m)*res->objectMaterial.Is*atenuacaoLinear);
+            if(fatorEspecular < 0) return cor;
+            cor += (Is*powf(fatorEspecular, res->objectMaterial.m)*res->objectMaterial.Is * atenuacao);
+
+            if(cor.x > 1) cor.x = 1;
+            if(cor.y > 1) cor.y = 1;
+            if(cor.z > 1) cor.z = 1;
+
             return cor;
         }
     };
 
-    struct Spot : public Luz{
-        struct{
-            LinearAlgebra::Vector4Df origem, direcao;
-            LinearAlgebra::Vector3Df Ia, Id, Is;
-            float atenuacaoLinear, cossenoAbertura;
-        };
+    class Spot : public Luz{
+    public:
+        LinearAlgebra::Vector4Df origem, direcaoSpot;
+        LinearAlgebra::Vector3Df Ia, Id, Is;
+        float atenuacaoLinear, cossenoAbertura;
+
+        Spot(LinearAlgebra::Vector4Df o, LinearAlgebra::Vector4Df dir, LinearAlgebra::Vector3Df amb, LinearAlgebra::Vector3Df dif, LinearAlgebra::Vector3Df spc, float a, float f){
+            origem = o;
+            direcaoSpot = dir.normalize();
+            Ia = amb;
+            Id = dif;
+            Is = spc;
+            atenuacaoLinear = a;
+            cossenoAbertura = f;
+        }
 
         LinearAlgebra::Vector3Df iluminar(CG::Result *res, LinearAlgebra::Vector4Df observador){
             /* Iluminação Ambiente */
             LinearAlgebra::Vector3Df cor = Ia * res->objectMaterial.Ia;
 
             /* Iluminação Difusa */
-            LinearAlgebra::Vector4Df direcao = (res->Pint - origem).normalize();
-            float atenuacao =  1 / (atenuacaoLinear * (res->Pint - origem).dot_product(direcao));
-            float fatorDifuso = (LinearAlgebra::Vector4Df{0, 0, 0, 0} - direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
-            float anguloRaioSpot = (res->Pint - origem).normalize().dot_product(direcao);
-            if(fatorDifuso <= 0 || anguloRaioSpot > cossenoAbertura) return cor;
-            cor = cor + (Id*fatorDifuso*res->objectMaterial.Id*atenuacaoLinear);
+            LinearAlgebra::Vector4Df direcao = (origem - res->Pint);
+            float atenuacao =  1 / (atenuacaoLinear * direcao.norm());
+            direcao = direcao.normalize();
+            float fatorDifuso = (-direcao).dot_product(res->normal); // Cosseno do angulo entre a normal e a iluminação
+            float anguloRaioSpot = direcao.dot_product(direcaoSpot);
+            if(fatorDifuso <= 0 || anguloRaioSpot < cossenoAbertura) return cor;
+            cor = cor + (Id * fatorDifuso * res->objectMaterial.Id * atenuacao);
 
             /* Iluminação Especular */
-            LinearAlgebra::Vector4Df reflexao = (direcao + (res->normal * 2)) * direcao.dot_product(res->normal); // Vetor refletido
+            LinearAlgebra::Vector4Df reflexao =  direcao - (res->normal * 2 * direcao.dot_product(res->normal)); // Vetor refletido
             float fatorEspecular = reflexao.dot_product(observador - res->Pint); // Cosseno do angulo entre vetor refletido e o vetor em direção o observador
-            cor = cor + (Is*fatorEspecular*res->objectMaterial.Is*atenuacao);
+            if(fatorEspecular < 0) return cor;
+            cor += (Is*powf(fatorEspecular, res->objectMaterial.m)*res->objectMaterial.Is * atenuacao);
+
+            if(cor.x > 1) cor.x = 1;
+            if(cor.y > 1) cor.y = 1;
+            if(cor.z > 1) cor.z = 1;
+
+            return cor;
+            return cor;
         }
     };
 }
