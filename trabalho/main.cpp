@@ -65,12 +65,42 @@ void movimentoTeclado(unsigned char Key, int x, int y)
         case 'a': P0 = P0 + LinearAlgebra::Vector4Df{0, 0, 1, 1}; break;
         case 's': P0 = P0 + LinearAlgebra::Vector4Df{-1, 0, 0, 1};break;
         case 'd': P0 = P0 + LinearAlgebra::Vector4Df{0, 0, -1, 1};break;
-        case ' ': P0 = P0 + LinearAlgebra::Vector4Df{0, 1, 0, 1}; break;
-        case 27: exit(1);
+        case 'i': P0 = P0 + LinearAlgebra::Vector4Df{0, 1, 0, 1}; break;
+        case 'j': P0 = P0 + LinearAlgebra::Vector4Df{0, 1, 0, 1}; break;
+        case 'e':
+            LA = LA + LinearAlgebra::Vector4Df{1, 0, 0, 1};
+            VU = VU + LinearAlgebra::Vector4Df{1, 0, 0, 1};
+            break;
+        case 'q':
+            LA = LA + LinearAlgebra::Vector4Df{-1, 0, 0, 1};
+            VU = VU + LinearAlgebra::Vector4Df{-1, 0, 0, 1};
+            break;
     }
     display();
 }
 
+void specialInput(int key, int x, int y){
+    switch(key)
+    {
+        case GLUT_KEY_UP:
+            LA = LA + LinearAlgebra::Vector4Df{0, 1, 0, 1};
+            VU = VU + LinearAlgebra::Vector4Df{0, 1, 0, 1};
+            break;
+        case GLUT_KEY_DOWN:
+            LA = LA + LinearAlgebra::Vector4Df{0, -1, 0, 1};
+            VU = VU + LinearAlgebra::Vector4Df{0, -1, 0, 1};
+            break;
+        case GLUT_KEY_RIGHT:
+            LA = LA + LinearAlgebra::Vector4Df{0, 0, 1, 1};
+            VU = VU + LinearAlgebra::Vector4Df{0, 0, 1, 1};
+            break;
+        case GLUT_KEY_LEFT:
+            LA = LA + LinearAlgebra::Vector4Df{0, 0, -1, 1};
+            VU = VU + LinearAlgebra::Vector4Df{0, 0, -1, 1};
+            break;
+    }
+    display();
+}
 
 int main(int argc, char **argv) {
     // Criação da Janela
@@ -83,6 +113,7 @@ int main(int argc, char **argv) {
     // Exibindo coisas na janela
     glutDisplayFunc(display); // Função que vai exibir os desenhos na janela
     glutKeyboardFunc(movimentoTeclado);
+    glutSpecialFunc(specialInput);
 
     glutMainLoop(); // Loop do programa
 

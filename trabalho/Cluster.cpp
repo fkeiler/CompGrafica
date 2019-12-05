@@ -17,12 +17,36 @@ Cluster Cluster::scenario()
 
     Cluster waterTank({25, 5, 25, 1}, 6);
 
-    float fenceVertHeigh = 1.1;
-    float fenceHoriHeigh = 23;
-    float fenceRadius = 0.1;
     LinearAlgebra::Vector4Df dx{1, 0, 0, 0};
     LinearAlgebra::Vector4Df dy{0, 1, 0, 0};
     LinearAlgebra::Vector4Df dz{0, 0, 1, 0};
+
+    float waterTankTopRadius = 1.3;
+    float waterTankTopHeight = 0.8;
+
+    float waterTankRadius = 1.2;
+    float waterTankHeigh = 3;
+
+    float waterTankBaseHeight = 0.1;
+    float waterTankBaseRadius = 1.4;
+
+    float waterTankBaseLegRadius = 0.3;
+    float waterTankBaseLegHeight = 4;
+
+    LinearAlgebra::Vector4Df wtbl1Coord{23.5, 0, 23.5, 1};
+    LinearAlgebra::Vector4Df wtbl2Coord{26.5, 0, 23.5, 1};
+    LinearAlgebra::Vector4Df wtbl3Coord{26.5, 0, 23.5, 1};
+    LinearAlgebra::Vector4Df wtbl4Coord{26.5, 0, 26.5, 1};
+
+    waterTank.Cylinders.emplace_back(waterTankBaseLegHeight, waterTankBaseLegRadius, wtbl1Coord, dy, CG::WaterTank(), 1);
+    waterTank.Cylinders.emplace_back(waterTankBaseLegHeight, waterTankBaseLegRadius, wtbl2Coord, dy, CG::WaterTank(), 1);
+    waterTank.Cylinders.emplace_back(waterTankBaseLegHeight, waterTankBaseLegRadius, wtbl3Coord, dy, CG::WaterTank(), 1);
+    waterTank.Cylinders.emplace_back(waterTankBaseLegHeight, waterTankBaseLegRadius, wtbl4Coord, dy, CG::WaterTank(), 1);
+
+    float fenceVertHeigh = 1.1;
+    float fenceHoriHeigh = 23;
+    float fenceRadius = 0.1;
+
     LinearAlgebra::Vector4Df fence1VertCoord{6, 0, 6, 1};
     LinearAlgebra::Vector4Df fence2VertCoord{17.5, 0, 6, 1};
     LinearAlgebra::Vector4Df fence3VertCoord{29, 0, 6, 1};
